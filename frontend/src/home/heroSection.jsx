@@ -1,3 +1,5 @@
+import Test from '../assets/images/test.jpeg'
+
 const stats = [
   { number: "$ 12 Million", label: "Revenue earned in 2024" },
   { number: "120+", label: "Trusted Partnership" },
@@ -7,7 +9,7 @@ const stats = [
 
 const HeroSection = () => {
     return (
-        <section className="relative pt-70 h-screen w-full bg-[#FAF4E1]   ">
+        <section className="relative pt-70 h-screen w-full">
             <div className="flex items-center justify-center ml-80">
                 <div className="flex flex-col"> 
                     <h1 className="text-5xl w-165 z-30">Connect Every Team,<br /> Task, and Project <br /> Together with Mind Script.</h1>
@@ -16,7 +18,7 @@ const HeroSection = () => {
                 </div>
                 
                 <div className="relative right-25">
-                    <img className="bg-[#8A8A8A] rounded-2xl w-120 h-70 mr-20" src="" alt="" />
+                    <img className="bg-[#8A8A8A] rounded-2xl w-120 h-70 mr-20" src={Test} alt="" />
                 </div>
             </div>
 
