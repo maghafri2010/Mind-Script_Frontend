@@ -3,7 +3,7 @@ import logo from '../assets/images/logo.png';
 const Header = () => {
 
     return (
-        <div className="flex z-50 bg-[#FAC9B3] fixed h-20 w-full mt-5 items-center justify-between text-">
+        <div className="flex z-50 bg-[#FAC9B3] fixed h-20 w-full border-b-2 items-center justify-between text-">
             <div className='flex items-center gap-6 ml-10'>
                 <Link><img className='rounded-[50%] w-18 h-16' src={logo} alt="" /></Link>
                 <h1 className='text-2xl'>Mind Script</h1>
