@@ -9,7 +9,7 @@ const window = () => {
 }
 
     return (
-        <section className="flex flex-col border w-fit ">
+        <section className="flex flex-col  w-full ">
             <div className="flex gap-8 items-center justify-center">
                 {tasks.map((task, i) => (
                     <div className="bg-[#212325] box p-4 text-white w-[250px] h-[200px] rounded-2xl">
