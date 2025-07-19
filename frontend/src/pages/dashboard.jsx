@@ -4,31 +4,41 @@ import Dash from '../components/dashboard/dash';
 import Menu from '../components/dashboard/menu';
 import Date from '../components/dashboard/ui/date';
 import Search from '../components/dashboard/ui/Search';
+import New from '../components/dashboard/ui/new';
 
 const Dashboard = () => {
     
+    
     const [bol, setBol] = useState(false);
     const openMenu = () => setBol(bol => !bol);
+
+
 
     
     return (
         
         
-        <section className='flex justify-items-center-safe gap-60 pt-12 border pl-12 bg-black  h-screen   '>
-            <Menu bol={bol} openMenu={openMenu} />
+        <section className='flex justify-center pt-12 border pl-12 bg-black h-full pb-32 '>
+            <div className='absolute left-13'>
+                <Menu bol={bol} openMenu={openMenu} />
+            </div>
+            
 
         <div className={`transition-all duration-300 ease-in-out`}
         
         >
-            <div className='flex gap-25 rounded-2xl'>
+            <div className='flex ml-84 justify-between rounded-2xl'>
                 <Search />
                 <Date />
             </div>
             
-            <div className='border pt-12 '>
+            <div className='  pt-12 ml-84  '>
                 
                 <Dash/>
-                
+                                
+            </div>
+            <div className='absolute right-10'>
+                <New />
             </div>
         </div>   
             
