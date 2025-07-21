@@ -5,6 +5,8 @@ import Menu from '../components/dashboard/menu';
 import Date from '../components/dashboard/ui/date';
 import Search from '../components/dashboard/ui/Search';
 import New from '../components/dashboard/ui/new';
+import MyTasks from '../components/dashboard/myTasks';
+import Project from '../components/dashboard/projects';
 
 const Dashboard = () => {
     
@@ -32,9 +34,9 @@ const Dashboard = () => {
                 <Date />
             </div>
             
-            <div className='  pt-12 ml-84  '>
+            <div className='pt-12 ml-84  '>
                 
-                <Dash/>
+                <Dash />
                                 
             </div>
             <div className='absolute right-10'>
