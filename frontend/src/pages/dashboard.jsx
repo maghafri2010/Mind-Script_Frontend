@@ -10,6 +10,8 @@ import Project from '../components/dashboard/projects';
 import Workspace from '../components/dashboard/workspace';
 import Calendar from '../components/dashboard/calendar';
 import Inbox from '../components/dashboard/inbox';
+import Settings from '../components/dashboard/settings';
+import Profile from '../components/dashboard/profile';
 
 const Dashboard = () => {
     
@@ -39,7 +41,7 @@ const Dashboard = () => {
             
             <div className='pt-12 ml-84  '>
                 
-                <Inbox />
+                <Profile />
                                 
             </div>
             <div className='absolute right-10'>
