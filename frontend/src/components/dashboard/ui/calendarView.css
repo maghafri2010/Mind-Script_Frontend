@@ -1,0 +1,22 @@
+:root {
+  --fc-border-color: #444;
+  background-color: #212325;
+  --fc-bg-event-opacity: 0.9;
+}
+
+.calendar-wrapper {
+  background-color: #1e1e1e;
+  color: #f0f0f0;
+  padding: 1rem;
+  border-radius: 12px;
+}
+
+.fc .fc-toolbar-title {
+  color: #f0f0f0;
+}
+
+.fc-daygrid-event {
+  border-radius: 6px;
+  padding: 2px;
+  font-size: 0.85rem;
+}

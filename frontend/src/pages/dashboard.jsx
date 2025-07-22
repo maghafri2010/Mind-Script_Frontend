@@ -7,6 +7,9 @@ import Search from '../components/dashboard/ui/Search';
 import New from '../components/dashboard/ui/new';
 import MyTasks from '../components/dashboard/myTasks';
 import Project from '../components/dashboard/projects';
+import Workspace from '../components/dashboard/workspace';
+import Calendar from '../components/dashboard/calendar';
+import Inbox from '../components/dashboard/inbox';
 
 const Dashboard = () => {
     
@@ -36,7 +39,7 @@ const Dashboard = () => {
             
             <div className='pt-12 ml-84  '>
                 
-                <Dash />
+                <Inbox />
                                 
             </div>
             <div className='absolute right-10'>
