@@ -4,6 +4,7 @@ import Navigator from "./ui/navigator";
 import MyPie from "./ui/radial";
 import MyTimeRange from "./ui/calendarUi";
 import data from "../../data/tasks";
+import Card from "./ui/card";
 
 
 const {
@@ -22,21 +23,7 @@ const {
 
 const array = [onProgress, completed, upcoming, overdue, reminder, project];
 
-const Card = ({ title, onButtonClick, children, color }) => (
-    <div className="card overflow-auto p-4 text-white scroll-container w-[250px] h-[200px] rounded-2xl">
-        <div className="flex items-center justify-between ">
-            <span className={`h-4 w-4 rounded-[50%] mr-4 ${color}`}></span>
-            <h1 className="font-bold mr-12">{title}</h1>
-            <button
-                onClick={onButtonClick}
-                className="border border-black box rounded pl-1 w-10"
-            >
-                <p className="w-6 h-4  rounded bg-black"></p>
-            </button>
-        </div>
-        {children}
-    </div>
-);
+
 
 const Dash = () => {
     const [bol, setBol] = useState(false);

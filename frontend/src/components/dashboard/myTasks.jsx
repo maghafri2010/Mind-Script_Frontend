@@ -2,6 +2,8 @@ import { useState } from "react";
 import Navigator from "./ui/navigator";
 import data from "../../data/tasks";
 import MyPie from "./ui/radial";
+import DatePicker from "react-datepicker";
+import MyDatePicker from "./ui/datePicker";
 
 const {
     
@@ -44,10 +46,13 @@ const MyTasks = () => {
         };
     return (
         <section className=" flex flex-col items-center">
-            <div className="flex justify-between p-4 items-center mb-8 card rounded-2xl w-[300px] h-[60px] border ">
-                <h1 className="text-2xl ">Today, 21/07/2025</h1>
-                <button><p className="w-10 h-10 bg-amber-50 rounded-2xl">▼</p></button>
-            </div>
+                
+                <MyDatePicker
+                onDateSelect={(dateStr) => {
+                setDateData(allData[dateStr] || []);
+                }}
+                />
+
             <div className="flex gap-8 items-center justify-center">
                 {tasks.map((task, i) => (
                     <Card key={i} title={task.title} color={task.color} onButtonClick={() => openWindow(i)}>

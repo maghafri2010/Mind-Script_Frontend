@@ -1,4 +1,7 @@
+import Card from "./ui/card";
 import { useState } from "react";
+
+
 
 
 const proj = [
@@ -9,30 +12,17 @@ const proj = [
     { title: "Project 5", members: "mabdo, alex", status: "In Progress", date: "21, jul, 2025 --> 21, aug, 2025" },
     { title: "Project 6", members: "mabdo, alex", status: "Completed", date: "21, jul, 2025 --> 21, aug, 2025" },
 ];
-const Card = () => {
-    return (
-        <div className="flex flex-wrap gap-8  mt-10 w-[1000px] h-[680px]">
-            {proj.map((item, idx) => (
-                <div className="flex flex-col w-[300px] h-[200px] box p-4 my-2 rounded-2xl bg-[#212325]" key={idx}>
-                    <h1 className="font-bold text-2xl text-white">{item.title}</h1>
-                    <p className="mt-2 text-amber-200 ">{item.members}</p>
-                    <p className="text-[18px] text-white">status: {item.status}</p>
-                    <p className="text-2xl text-white">0.00%</p>
-                    <p className="mt-6 text-white">{item.date}</p>
-                </div>
-            ))}
-        </div>
-    )
-}
+
+
 
 const Log = () => {
     return (
         <div className="flex justify-between">
-            <div className="flex flex-col w-[500px] h-[700px]  p-4 my-2 rounded-2xl bg-[#212325]">
-                <h1 className="font-bold text-4xl text-white">Log</h1>
+            <div className="flex flex-col w-[500px] h-[600px]  p-4 my-2 rounded-2xl menu ">
+                <h1 className="font-bold text-4xl ">Log</h1>
             </div>
-            <div className="flex flex-col w-[300px] h-[600px] p-4 my-2 rounded-2xl bg-[#212325]">
-                <h1 className="text-white box hover:bg-black rounded h-8 flex justify-center items-center">M Abdelmoghit</h1>
+            <div className="flex flex-col w-[300px] h-[600px] p-4 my-2 rounded-2xl menu">
+                <h1 className=" box hover:bg-black rounded h-8 flex justify-center items-center">M Abdelmoghit</h1>
             </div>
         </div>   
     )
@@ -89,7 +79,13 @@ const Team = () => {
 
 const Workspace = () => {
 
-    const data = ["By project", "Back log", "Mine", "Team"];
+    const data = [
+        {title: "By project" ,action: <Card />},
+        {title: "By log" ,action: <Log />},
+        {title: "By mine" ,action: <Mine />},
+        {title: "By team" ,action: <Team />}
+    ];
+        
 
     const [active, setActive] = useState(null);
     
@@ -98,14 +94,18 @@ const Workspace = () => {
         <section>
             <div className="flex  gap-8">
                 {data.map((item, index) => (
-                    <button key={index} onClick={() => setActive(index)} className="flex items-center gap-4">
-                        <p className={`h-8 w-8 rounded-2xl box ${active === index ? "bg-green-400" : "bg-gray-400"}`}></p>
-                        {item}
+                    <button key={index} onClick={() => setActive(index)} className="flex text items-center gap-4">
+                        <p className={`h-8 w-8 rounded-2xl  box ${active === index ? "bg-green-400" : "bg-gray-400"}`}></p>
+                        {item.title}
                     </button>
                 ))}
             </div>
-
-                <Team />
+                {active !== null && (
+                    <div className="mt-8">
+                        {data[active].action}
+                    </div>
+                )}
+                
                 
             
             
