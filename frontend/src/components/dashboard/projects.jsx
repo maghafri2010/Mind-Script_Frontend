@@ -10,9 +10,9 @@ const proj = [
 
 const Project = () => {
     return (
-        <section className=" w-[1100px] h-[680px] text-white rounded-2xl p-8 flex flex-wrap gap-10">
+        <section className=" w-[1100px] h-[680px]  rounded-2xl p-8 flex flex-wrap gap-10">
             {proj.map((item, idx) => (
-            <div className="flex flex-col w-[300px] h-[200px] box  p-4 my-2 rounded-2xl bg-[#212325] " key={idx}>
+            <div className="flex flex-col w-[300px] h-[200px] box  p-4 my-2 rounded-2xl card " key={idx}>
                 <h1 className="font-bold text-2xl">{item.title}</h1>
                 <p className="mt-2 text-amber-200">{item.members}</p>
                 <p className="text-[18px]">status: {item.status}</p>

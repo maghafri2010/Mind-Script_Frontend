@@ -26,7 +26,7 @@ const EditTask = ({task, onClose, closeIcon}) => {
         
     }
     return (
-        <section className="absolute top-0 left-0 bg-[#212325] w-[1100px] h-[750px] text-white rounded-2xl">
+        <section className="absolute top-0 left-0 menu w-[1100px] h-[750px]  rounded-2xl">
             <div>
                 <h1 className="text-2xl ml-16 mt-8">Edit Task</h1>
                 <button className="absolute right-8 top-8 h-8 w-8" onClick={onClose}>
@@ -37,15 +37,15 @@ const EditTask = ({task, onClose, closeIcon}) => {
                 <form className="p-8" onSubmit={saveChanges}>
                     <div className="mb-4">
                         <label className="block text-sm font-medium mb-2">Title</label>
-                        <input ref={titleRef} type="text" defaultValue={task.title} className="w-full p-2 rounded bg-gray-700 text-white" />
+                        <input ref={titleRef} type="text" defaultValue={task.title} className="w-full p-2 rounded edit text-white" />
                     </div>
                     <div className="mb-4">
                         <label className="block text-sm font-medium mb-2">Date</label>
-                        <input ref={dateRef} type="text" defaultValue={task.date} className="w-full p-2 rounded bg-gray-700 text-white" />
+                        <input ref={dateRef} type="text" defaultValue={task.date} className="w-full p-2 rounded edit text-white" />
                     </div>
                     <div className="mb-4">
                         <label className="block text-sm font-medium mb-2">Status</label>
-                        <select ref={statusRef} defaultValue={task.status} className="w-full p-2 rounded bg-gray-700 text-white">
+                        <select ref={statusRef} defaultValue={task.status} className="w-full p-2 rounded edit text-white">
                             <option value="onProgress">On Progress</option>
                             <option value="Completed">Completed</option>
                             <option value="Upcoming">Upcoming</option>
@@ -54,11 +54,11 @@ const EditTask = ({task, onClose, closeIcon}) => {
                     </div>
                     <div className="mb-4">
                         <label className="block text-sm font-medium mb-2">Project</label>
-                        <input ref={projectRef} type="text" defaultValue={task.project} className="w-full p-2 rounded bg-gray-700 text-white" />
+                        <input ref={projectRef} type="text" defaultValue={task.project} className="w-full p-2 rounded edit text-white" />
                     </div>
                     <div className="mb-4">
                         <label className="block text-sm font-medium mb-2">Team</label>
-                        <input ref={teamRef} type="text" defaultValue={task.team} className="w-full p-2 rounded bg-gray-700 text-white" />
+                        <input ref={teamRef} type="text" defaultValue={task.team} className="w-full p-2 rounded edit text-white" />
                     </div>
                     <button type="submit" className="bg-blue-500 cursor-pointer hover:bg-blue-600 text-white px-4 py-2 rounded">Save Changes</button>
                 </form>

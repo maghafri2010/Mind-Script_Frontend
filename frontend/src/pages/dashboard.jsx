@@ -38,7 +38,7 @@ const Dashboard = () => {
     return (
         
         
-        <section className='flex justify-center pt-12 border pl-12 bg-black h-[1000px] '>
+        <section className='flex justify-center pt-12 border pl-12  h-[1000px] w-[1280px] '>
             <div className='absolute left-13'>
                 <Menu bol={bol} openMenu={openMenu} setActiveLayer={setActiveLayer} activeLayer={activeLayer} />
             </div>

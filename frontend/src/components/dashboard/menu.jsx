@@ -9,6 +9,7 @@ import Inbox from '../../assets/images/inbox.png'
 import Calendar from '../../assets/images///calendar.png'
 import Tasks from '../../assets/images/tasks.png'
 import Logout from '../../assets/images/turn-off.png'
+import Profile from '../../assets/images/profil.png'
 
 const labels = [
     {img: Dashboard , name: "Dashboard"},
@@ -26,7 +27,7 @@ const Menu = ({bol, openMenu, setActiveLayer, activeLayer}) => {
 
     return (
 
-        <section className={`absolute z-50  rounded-2xl text-white  h-[850px] transition-width duration-500 ease-in-out  bg-[#212325]`}
+        <section className={`absolute z-50  rounded-2xl text-white  h-[850px] transition-width duration-500 ease-in-out menu`}
         style={{width: bol ? "250px" : "120px"}}
         >
                 <div className='flex flex-col justify-center  items-start'>
@@ -40,7 +41,7 @@ const Menu = ({bol, openMenu, setActiveLayer, activeLayer}) => {
 
                     <div className="box ml-10 mt-8 flex items-center gap-4 "
                     onClick={() => setActiveLayer(7)}>
-                        <img className="bg-white w-10 h-10 rounded-[50%]" src={Logout} alt="" />
+                        <img className="bg-white w-10 h-10 rounded-[50%]" src={Profile} alt="" />
                         {bol ? <h1 className="transition-opacity duration-500">username</h1> : "" }
                     </div>
 

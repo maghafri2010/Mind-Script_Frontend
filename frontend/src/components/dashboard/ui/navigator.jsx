@@ -12,7 +12,7 @@ const menuItems = [
 ]; 
 
 
-const Navigator = ({labels = onprogress, onClose}) => {
+const Navigator = ({labels , onClose}) => {
 
     const [bol, setBol] = useState(false);
     const [editingTask, setEditingTask] = useState(null);
@@ -23,7 +23,8 @@ const Navigator = ({labels = onprogress, onClose}) => {
     }
     const duplicateTask = (index) => {
         const taskToDuplicate = labels[index];
-        labels.push({ ...taskToDuplicate, id: Date.now() }); // Assuming each task has a unique id
+        labels.push({...taskToDuplicate}); 
+
     };
     const handleMenuClick = (action, index) => {
         if (action === "delete") {
@@ -44,15 +45,15 @@ const Navigator = ({labels = onprogress, onClose}) => {
     
 
     return (
-        <section className="absolute bg-[#212325] w-[1100px] h-[750px] text-white rounded-2xl">
+        <section className="absolute menu w-[1100px] h-[750px] text-white rounded-2xl">
             
-            <h1 className="text-2xl ml-16 mt-8">My Tasks</h1>
+            <h1 className="text-2xl ml-16 mt-8">My Tasks:</h1>
             
             <button onClick={onClose}><img className="absolute right-8 top-8 h-8 w-8" src={close} alt="" /></button>
             <div className="flex flex-wrap p-16 gap-8 scroll-container overflow-auto h-[600px]">
                 
             {labels.map((label, index) => (
-                <div key={index} className="relative border rounded-2xl bg-[#2F3133]  p-4 w-[300px] h-[180px]">
+                <div key={index} className="relative border rounded-2xl card  p-4 w-[300px] h-[180px]">
                     <div className="flex justify-between">
                         <h1 className="font-bold ">{label.title}</h1>    
                         <img src={Sup} 
@@ -66,9 +67,9 @@ const Navigator = ({labels = onprogress, onClose}) => {
                 </div>
                 
                 {openMenuIndex === index && (
-                    <div className="absolute w-[100px] right-0 top-10 z-50 bg-[#232323] rounded shadow-lg">
+                    <div className="absolute w-[100px] right-0 top-10 z-50 menu rounded shadow-lg">
                         {menuItems.map((item, i) => (
-                        <button onClick={() => handleMenuClick(item.action, index)} key={i} className="box p-2 rounded-2xl hover:bg-gray-700 w-full text-left">
+                        <button onClick={() => handleMenuClick(item.action, index)} key={i} className="box p-2 rounded-2xl hover:bg-gray-700 hover:text-white w-full text-left">
                         {item.title}
                         </button>
                         ))}

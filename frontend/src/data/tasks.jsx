@@ -4,11 +4,11 @@ let tasks = [
         content: []
     },
     {title: "Completed",
-        color: "bg-green-700",
+        color: "bg-yellow-500",
         content: []
     },
     {title: "Upcoming",
-        color: "bg-yellow-500",
+        color: "bg-green-500",
         content: []
     },
     {title: "Overdue",

@@ -27,7 +27,7 @@ const New = () => {
 
     return(
         <section className='relative flex'>
-            <div className={`z-50 fixed items-end gap-4 bottom-30 right-10 flex flex-col text-white transition-all duration-300  overflow-hidden ease-in-out ${status ? "w-[160px] h-[400px]" : "w-0 h-0 "}`}>
+            <div className={`z-50 fixed items-end gap-4 bottom-30 right-10 flex flex-col transition-all duration-300  overflow-hidden ease-in-out ${status ? "w-[160px] h-[400px]" : "w-0 h-0 "}`}>
                 {buttonList.map((button, i) => (
                     <button key={i} onClick={openbar} className={`box  rounded-4xl p-2 flex items-center gap-2 `}>
                         {button.name}
@@ -38,7 +38,7 @@ const New = () => {
             
 
 
-            <div onClick={openNew} className="w-16 h-16 border-2 box border-white p-2 bg-[#2F3133] relative rounded-[50%]">
+            <div onClick={openNew} className="w-16 h-16 border-2 mt-8 box border-white p-2 new relative rounded-[50%]">
                 <img src={Plus} alt="plus_icon" />
             </div>
 

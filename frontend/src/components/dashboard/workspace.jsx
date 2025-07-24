@@ -48,7 +48,7 @@ const Mine = () => {
 
 const Team = () => {
     return (
-        <div className="flex flex-col mt-12 w-[1100px] h-[680px] bg-[#212325] text-white rounded-2xl p-8">
+        <div className="flex flex-col mt-12 w-[1100px] h-[680px] card  rounded-2xl p-8">
             <div className="flex justify-between items-center border-b pb-4 mb-4">
                 <h1 className="text-2xl ml-10">Members</h1>
                 <h1 className="text-2xl">Email</h1>
@@ -96,7 +96,7 @@ const Workspace = () => {
 
     return (
         <section>
-            <div className="flex text-white gap-8">
+            <div className="flex  gap-8">
                 {data.map((item, index) => (
                     <button key={index} onClick={() => setActive(index)} className="flex items-center gap-4">
                         <p className={`h-8 w-8 rounded-2xl box ${active === index ? "bg-green-400" : "bg-gray-400"}`}></p>

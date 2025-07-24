@@ -1,5 +1,72 @@
 @import "tailwindcss";
 
+
+:root {
+  --bg-color: #FAF4E1;
+  --card-bg: #ffffff;
+  --menu-bg: #FCEABA;
+  --bar-bg: #8b8b8b;
+  --text-color: #111111;
+  --hover-bg: #ddd;
+  --accent-color: #6200ee;
+  --edit-bg: white; /* example accent */
+}
+
+/* Dark theme overrides */
+body.dark {
+  --bg-color: black;
+  --card-bg: #212325;
+  --bar-bg: #141414;
+  --menu-bg: #212325;
+  --text-color: #ffffff;
+  --hover-bg: #000;
+  --accent-color: #bb86fc;
+  --edit-bg: #374151;
+}
+
+body {
+  background-color: var(--bg-color);
+}
+
+.card {
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  /* other styles */
+}
+
+.new {
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  border-color: var(--text-color);
+  /* other styles */
+}
+.menu {
+  background-color: var(--menu-bg);
+  color: var(--text-color);
+  /* other styles */
+}
+.bar {
+  background-color: var(--bar-bg);
+  color: var(--text-color);
+  /* other styles */
+}
+.edit {
+  background-color: var(--edit-bg);
+  color: var(--text-color);
+  border-color: var(--text-color);
+  /* other styles */
+}
+
+.hover:hover {
+  background-color: var(--hover-bg);
+  color: var(--text-color);
+  /* other styles */
+}
+
+
+
+
+
 .btn-style {
     border-radius: 25px;
     border-color: black;

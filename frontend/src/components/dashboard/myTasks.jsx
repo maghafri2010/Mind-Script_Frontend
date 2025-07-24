@@ -18,9 +18,10 @@ const {
 
 const array = [onProgress, completed, upcoming, overdue, reminder];
 
-const Card = ({ title, onButtonClick, children }) => (
-    <div className="bg-[#212325] overflow-auto p-4 text-white scroll-container w-[250px] h-[300px] rounded-2xl">
-        <div className="flex  justify-between">
+const Card = ({ title, onButtonClick, children, color }) => (
+    <div className="card overflow-auto p-4 text-white scroll-container w-[250px] h-[300px] rounded-2xl">
+        <div className="flex items-center  justify-between">
+            <span className={`w-4 h-4 rounded-[50%] ${color}`}></span>
             <h1 className="font-bold text-2xl">{title}</h1>
             <button
                 onClick={onButtonClick}
@@ -42,18 +43,18 @@ const MyTasks = () => {
             setSelectedIndex(index);
         };
     return (
-        <section className="bg-black flex flex-col items-center">
-            <div className="flex justify-between p-4 items-center mb-8 bg-[#212325] rounded-2xl w-[300px] h-[60px] border ">
-                <h1 className="text-2xl text-white">Today, 21/07/2025</h1>
+        <section className=" flex flex-col items-center">
+            <div className="flex justify-between p-4 items-center mb-8 card rounded-2xl w-[300px] h-[60px] border ">
+                <h1 className="text-2xl ">Today, 21/07/2025</h1>
                 <button><p className="w-10 h-10 bg-amber-50 rounded-2xl">▼</p></button>
             </div>
             <div className="flex gap-8 items-center justify-center">
                 {tasks.map((task, i) => (
-                    <Card key={i} title={task.title} onButtonClick={() => openWindow(i)}>
+                    <Card key={i} title={task.title} color={task.color} onButtonClick={() => openWindow(i)}>
                         {task.content.map((arr, j) => (
-                            <p
+                            <p  
                                 key={j}
-                                className="flex items-center p-2 my-2 rounded box h-fit hover:bg-black"
+                                className="flex items-center p-2 my-2 rounded box h-fit hover:bg-black hover:text-white"
                             >
                                 {arr}
                             </p>
@@ -65,7 +66,7 @@ const MyTasks = () => {
             {/* Reminders & Pie */}
             <div className="flex gap-8 justify-center items-center mt-10">
                 {/* Reminders */}
-                <div className="bg-[#212325] overflow-auto p-4 text-white scroll-container w-[400px] h-[300px] rounded-2xl">
+                <div className="card overflow-auto p-4 text-white scroll-container w-[400px] h-[300px] rounded-2xl">
                     <div className="flex justify-between items-center">
                         <h1 className="font-bold text-2xl">Reminders</h1>
                         <button
@@ -78,7 +79,7 @@ const MyTasks = () => {
                     {reminder.map((rem, i) => (
                         <div
                             key={i}
-                            className="justify-between flex box hover:bg-black"
+                            className="justify-between flex box hover:bg-black hover:text-white "
                         >
                             <p className="flex items-center p-2 my-2 rounded h-fit">
                                 {rem.title}
@@ -90,7 +91,7 @@ const MyTasks = () => {
                     ))}
                 </div>
                 {/* Pie Chart */}
-                <div className="bg-[#212325] text-white w-[663px] h-[300px] rounded-2xl">
+                <div className="bg-gray-600  w-[663px] h-[300px] rounded-2xl">
                     <div className="flex flex-col w-full h-[200px] relative">
                         <h1 className=" font-bold pl-4 pt-4 h-fit  text-2xl">
                             Statistics by Month
@@ -101,18 +102,10 @@ const MyTasks = () => {
             </div>
             {/* Navigator Modal */}
             {bol && selectedIndex !== null && (
-                <Navigator labels={array[selectedIndex]} />
+                <Navigator labels={array[selectedIndex]} onClose={() => setBol(false)} />
             )}
 
-            {/* Overlay */}
-            {bol && (
-                <div
-                    className="fixed inset-0 bg-black/10 z-40"
-                    onClick={() => setBol(false)}
-                    tabIndex={-1}
-                    aria-hidden="true"
-                />
-            )}
+            
 
         </section>
     )

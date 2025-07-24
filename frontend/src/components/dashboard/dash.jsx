@@ -4,15 +4,16 @@ import Navigator from "./ui/navigator";
 import MyPie from "./ui/radial";
 import MyTimeRange from "./ui/calendarUi";
 import data from "../../data/tasks";
-import { color } from "d3";
 
 
 const {
-    tasks,
+    
+    
     onProgress,
     completed,
-    upcoming,
     overdue,
+    upcoming,
+    tasks,
     reminder,
     project,
     pieData,
@@ -22,7 +23,7 @@ const {
 const array = [onProgress, completed, upcoming, overdue, reminder, project];
 
 const Card = ({ title, onButtonClick, children, color }) => (
-    <div className="bg-[rgb(33,35,37)] overflow-auto p-4 text-white scroll-container w-[250px] h-[200px] rounded-2xl">
+    <div className="card overflow-auto p-4 text-white scroll-container w-[250px] h-[200px] rounded-2xl">
         <div className="flex items-center justify-between ">
             <span className={`h-4 w-4 rounded-[50%] mr-4 ${color}`}></span>
             <h1 className="font-bold mr-12">{title}</h1>
@@ -47,7 +48,7 @@ const Dash = () => {
     };
 
     return (
-        <section className="flex flex-col w-full">
+        <section className="flex flex-col w-full ">
             {/* Tasks */}
             <div className="flex gap-8 items-center justify-center">
                 {tasks.map((task, i) => (
@@ -55,7 +56,7 @@ const Dash = () => {
                         {task.content.map((arr, j) => (
                             <p
                                 key={j}
-                                className="flex items-center p-2 my-2 rounded box h-fit hover:bg-black"
+                                className="flex items-center p-2 my-2 rounded box h-fit hover:bg-black hover:text-white"
                             >
                                 {arr}
                             </p>
@@ -67,7 +68,7 @@ const Dash = () => {
             {/* Reminders & Pie */}
             <div className="flex gap-8 justify-center items-center mt-10">
                 {/* Reminders */}
-                <div className="bg-[#212325] overflow-auto p-4 text-white scroll-container w-[400px] h-[200px] rounded-2xl">
+                <div className="card overflow-auto p-4 text-white scroll-container w-[400px] h-[200px] rounded-2xl">
                     <div className="flex justify-between items-center">
                         <h1 className="font-bold">Reminders</h1>
                         <button
@@ -80,19 +81,19 @@ const Dash = () => {
                     {reminder.map((rem, i) => (
                         <div
                             key={i}
-                            className="justify-between flex box hover:bg-black"
+                            className="justify-between flex box hover:bg-black hover:text-white "
                         >
                             <p className="flex items-center p-2 my-2 rounded h-fit">
                                 {rem.title}
                             </p>
                             <p className="flex items-center p-2 my-2 rounded h-fit">
-                                {rem.date}
+                                {rem.date} 
                             </p>
                         </div>
                     ))}
                 </div>
                 {/* Pie Chart */}
-                <div className="bg-[#212325] text-white w-[663px] h-[200px] rounded-2xl">
+                <div className="bg-gray-600 w-[663px] h-[200px] rounded-2xl">
                     <div className="flex w-full h-[200px] relative">
                         <h1 className="absolute font-bold pl-3 pt-3">
                             Statistics By Month
@@ -103,9 +104,9 @@ const Dash = () => {
             </div>
 
             {/* Projects & Calendar */}
-            <div className="flex gap-8 justify-center items-center mt-10">
+            <div className="flex  gap-8 justify-center items-center mt-10">
                 {/* Projects */}
-                <div className="bg-[#212325] scroll-container overflow-auto p-4 text-white w-[400px] h-[200px] rounded-2xl">
+                <div className="card scroll-container overflow-auto p-4 w-[400px] h-[200px] rounded-2xl">
                     <div className="flex justify-between">
                         <h1 className="font-bold">Projects</h1>
                         <button
@@ -119,7 +120,7 @@ const Dash = () => {
                         {project.map((item, idx) => (
                             <div
                                 key={idx}
-                                className="flex justify-between items-center p-2 my-2 rounded h-fit hover:bg-black"
+                                className="flex justify-between items-center p-2 my-2 rounded h-fit hover:bg-black hover:text-white box"
                             >
                                 <p>{item.title}</p>
                                 <p className="text-gray-400">{item.date}</p>
@@ -130,7 +131,7 @@ const Dash = () => {
                     </div>
                 </div>
                 {/* Calendar */}
-                <div className="bg-[#212325]   p-4 text-white w-[660px] h-[200px] rounded-2xl">
+                <div className="bg-gray-600   p-4 w-[660px] h-[200px] rounded-2xl">
                     <div className="flex justify-between">
                         <h1 className="font-bold">Calendar</h1>
                     </div>
@@ -144,7 +145,7 @@ const Dash = () => {
 
             {/* Navigator Modal */}
             {bol && selectedIndex !== null && (
-                <Navigator labels={array[selectedIndex]} bol={bol} onClose={() => setBol(false)} />
+                <Navigator labels={array[selectedIndex]} onClose={() => setBol(false)} />
             )}
 
             
