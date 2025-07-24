@@ -18,6 +18,19 @@ const Dashboard = () => {
     
     const [bol, setBol] = useState(false);
     const openMenu = () => setBol(bol => !bol);
+    const [activeLayer, setActiveLayer] = useState(0); // default to Dashboard
+
+    const layers = [
+        
+        { name: 'Dashboard', component: <Dash /> },
+        { name: 'My Tasks', component: <MyTasks /> },
+        { name: 'Workspace', component: <Workspace /> },
+        { name: 'Projects', component: <Project /> },
+        { name: 'Calendar', component: <Calendar /> },
+        { name: 'Inbox', component: <Inbox /> },
+        { name: 'Settings', component: <Settings /> },
+        { name: 'Profile', component: <Profile /> }
+    ];  
 
 
 
@@ -25,9 +38,9 @@ const Dashboard = () => {
     return (
         
         
-        <section className='flex justify-center pt-12 border pl-12 bg-black h-full pb-32 '>
+        <section className='flex justify-center pt-12 border pl-12 bg-black h-[1000px] '>
             <div className='absolute left-13'>
-                <Menu bol={bol} openMenu={openMenu} />
+                <Menu bol={bol} openMenu={openMenu} setActiveLayer={setActiveLayer} activeLayer={activeLayer} />
             </div>
             
 
@@ -40,9 +53,7 @@ const Dashboard = () => {
             </div>
             
             <div className='pt-12 ml-84  '>
-                
-                <Profile />
-                                
+                {layers[activeLayer].component}                
             </div>
             <div className='absolute right-10'>
                 <New />

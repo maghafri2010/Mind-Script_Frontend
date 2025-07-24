@@ -20,7 +20,7 @@ const labels = [
     {img: Setting, name: "Settings"},
 ]
 
-const Menu = ({bol, openMenu}) => {
+const Menu = ({bol, openMenu, setActiveLayer, activeLayer}) => {
 
     
 
@@ -38,7 +38,8 @@ const Menu = ({bol, openMenu}) => {
                         src={Menu_icon} alt="Menu_icon" />
                     </button>
 
-                    <div className="box ml-10 mt-8 flex items-center gap-4 " >
+                    <div className="box ml-10 mt-8 flex items-center gap-4 "
+                    onClick={() => setActiveLayer(7)}>
                         <img className="bg-white w-10 h-10 rounded-[50%]" src={Logout} alt="" />
                         {bol ? <h1 className="transition-opacity duration-500">username</h1> : "" }
                     </div>
@@ -48,12 +49,16 @@ const Menu = ({bol, openMenu}) => {
                         <button className="box">Team</button>
                     </div>
                     {labels.map((label, i) => (
-                        <div key={i} className="box ml-10 mt-8 flex items-center gap-4 ">
+                        <div 
+                        key={i} 
+                        className={`box ml-10 mt-8 flex items-center gap-4 ${activeLayer === i ? "bg-gray-70" : ""} `}
+                        onClick={() => setActiveLayer(i)}>
                             <img className="w-10 h-10 bg-amber-50 rounded-2xl" src={label.img} alt={label.name} />
                             {bol && <p className="transition-opacity duration-500">{label.name}</p>}
                         </div>
                     ))}
-                    <div className=" box flex ml-10  duration-150 items-center gap-4 mt-20">
+                    <div className=" box flex ml-10  duration-150 items-center gap-4 mt-20"
+                    onClick={() => setActiveLayer()}>
                         <img className="bg-white  w-10 h-10 rounded-[50%]" src={Logout} alt="" />
                         {bol && <p className="transition-opacity duration-500">Logout</p>}
                     </div>

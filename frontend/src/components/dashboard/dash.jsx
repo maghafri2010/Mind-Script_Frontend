@@ -4,6 +4,7 @@ import Navigator from "./ui/navigator";
 import MyPie from "./ui/radial";
 import MyTimeRange from "./ui/calendarUi";
 import data from "../../data/tasks";
+import { color } from "d3";
 
 
 const {
@@ -20,10 +21,11 @@ const {
 
 const array = [onProgress, completed, upcoming, overdue, reminder, project];
 
-const Card = ({ title, onButtonClick, children }) => (
-    <div className="bg-[#212325] overflow-auto p-4 text-white scroll-container w-[250px] h-[200px] rounded-2xl">
-        <div className="flex  justify-between">
-            <h1 className="font-bold">{title}</h1>
+const Card = ({ title, onButtonClick, children, color }) => (
+    <div className="bg-[rgb(33,35,37)] overflow-auto p-4 text-white scroll-container w-[250px] h-[200px] rounded-2xl">
+        <div className="flex items-center justify-between ">
+            <span className={`h-4 w-4 rounded-[50%] mr-4 ${color}`}></span>
+            <h1 className="font-bold mr-12">{title}</h1>
             <button
                 onClick={onButtonClick}
                 className="border border-black box rounded pl-1 w-10"
@@ -49,7 +51,7 @@ const Dash = () => {
             {/* Tasks */}
             <div className="flex gap-8 items-center justify-center">
                 {tasks.map((task, i) => (
-                    <Card key={i} title={task.title} onButtonClick={() => openWindow(i)}>
+                    <Card key={i} title={task.title} color={task.color} onButtonClick={() => openWindow(i)}>
                         {task.content.map((arr, j) => (
                             <p
                                 key={j}
@@ -142,18 +144,10 @@ const Dash = () => {
 
             {/* Navigator Modal */}
             {bol && selectedIndex !== null && (
-                <Navigator labels={array[selectedIndex]} />
+                <Navigator labels={array[selectedIndex]} bol={bol} onClose={() => setBol(false)} />
             )}
 
-            {/* Overlay */}
-            {bol && (
-                <div
-                    className="fixed inset-0 bg-black/10 z-40"
-                    onClick={() => setBol(false)}
-                    tabIndex={-1}
-                    aria-hidden="true"
-                />
-            )}
+            
         </section>
     );
 };

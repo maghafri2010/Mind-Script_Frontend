@@ -1,14 +1,18 @@
 let tasks = [
     {title: "onProgress",
+        color: "bg-blue-500",
         content: []
     },
     {title: "Completed",
+        color: "bg-green-700",
         content: []
     },
     {title: "Upcoming",
+        color: "bg-yellow-500",
         content: []
     },
     {title: "Overdue",
+        color: "bg-red-500",
         content: []
     },
 ];
