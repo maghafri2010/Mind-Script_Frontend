@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { use, useState } from "react";
 import "./dashboard.css";
 import Navigator from "./ui/navigator";
 import MyPie from "./ui/radial";
 import MyTimeRange from "./ui/calendarUi";
 import data from "../../data/tasks";
 import Card from "./ui/card";
-
+import { buttonList } from "./ui/new";
+import New from "./ui/new";
 
 const {
     
@@ -28,6 +29,9 @@ const array = [onProgress, completed, upcoming, overdue, reminder, project];
 const Dash = () => {
     const [bol, setBol] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState(null);
+    const [index, setIndex] = useState(null);
+
+    const SelectedScreen = index !== null ? buttonList[index]?.screen : null;
 
     const openWindow = (index) => {
         setBol(true);
@@ -134,7 +138,15 @@ const Dash = () => {
             {bol && selectedIndex !== null && (
                 <Navigator labels={array[selectedIndex]} onClose={() => setBol(false)} />
             )}
-
+            
+            
+            
+            <div className='absolute top-210 right-10'>
+                <New setIndex={setIndex} index={index} />
+            </div>
+            {index !== null  ? buttonList[index].screen : ""};
+            {SelectedScreen && <SelectedScreen onClose={() => setIndex(null)}/>}
+            
             
         </section>
     );

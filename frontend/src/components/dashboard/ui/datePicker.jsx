@@ -19,7 +19,7 @@ export default function MyDatePicker({ onDateSelect }) {
         selected={selectedDate}
         onChange={handleChange}
         placeholderText="Select a date"
-        className="p-2 border card mb-4 rounded-2xl text-center cursor-pointer w-full "
+        className="p-2 border card mb-4 rounded-2xl text-center cursor-pointer  w-full "
         dateFormat="yyyy-MM-dd"
       />
     </div>

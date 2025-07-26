@@ -55,9 +55,7 @@ const Dashboard = () => {
             <div className='pt-12 ml-84  '>
                 {layers[activeLayer].component}                
             </div>
-            <div className='absolute right-10'>
-                <New />
-            </div>
+            
         </div>   
             
         </section>
