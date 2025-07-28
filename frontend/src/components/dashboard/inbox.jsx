@@ -23,7 +23,9 @@ const Inbox = () => {
                     <p>...</p>
 
                 </div>
+                
             </div>
+            
 
         </section>
     )

@@ -43,10 +43,10 @@ const Register = ({onSwitch}) => {
     };
 
     return (
-        <section className="relative w-full pt-70 h-screen bg-[#F7EABC]">
+        <section className="relative w-full  py-70 h-screen bg-[#F7EABC]">
 
            <div className="flex flex-col justify-center items-center ">
-                <h1 className="text-4xl mb-12">Create Account</h1>
+                <h1 className="text-4xl mb-8">Create Account</h1>
                 
                 <form onSubmit={handleSubmit}>
                     <div className="flex flex-col justify-center  items-center">
@@ -90,7 +90,7 @@ const Register = ({onSwitch}) => {
                     className="btn-style bg-[#FFCBB4] mt-4 hover:bg-white w-54 h-10">Create Account</button>
                     <button 
                     onClick={() => onSwitch("login")} 
-                    className="underline cursor-pointer font-bold mt-8">Already have an account?</button>
+                    className="underline cursor-pointer font-bold my-2">Already have an account?</button>
                     </div>
                 </form>
                 

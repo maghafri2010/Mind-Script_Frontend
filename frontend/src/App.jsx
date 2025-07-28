@@ -9,13 +9,16 @@ import Dashboard from './pages/dashboard'
 function App() {
 
   return (
-    <>
+    <> 
     <BrowserRouter basename='/Mind-Script'>
+
+      
       <Routes>
         <Route path="/" element= {<Home />}></Route>
         <Route path='/account' element={<Account />}></Route>
         <Route path='/account/register' element={<Register />}> </Route>
         <Route path='/account/reset' element={<Reset />}></Route>
+        <Route path='/dashboard' element={<Dashboard />}></Route>
 
       </Routes>
     </BrowserRouter>
