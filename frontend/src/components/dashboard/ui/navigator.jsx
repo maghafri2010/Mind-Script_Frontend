@@ -4,6 +4,7 @@ import Sup from "../../../assets/images/kebab.png";
 import close from "../../../assets/images/supprimer.png";
 import EditTask from "./editTask.jsx";
 import { useState } from "react";
+import { minutesToHours } from "date-fns";
 
 const menuItems = [
     { title: "Edit", action: "edit" },
@@ -17,7 +18,6 @@ const Navigator = ({labels , onClose}) => {
     const [bol, setBol] = useState(false);
     const [editingTask, setEditingTask] = useState(null);
     const [openMenuIndex, setOpenMenuIndex] = useState(null);
-    const deleteTask = (index) =>  labels.splice(index, 1);    
     const edit_Task = (index) => { 
         setEditingTask(labels[index]);
     }
@@ -39,6 +39,20 @@ const Navigator = ({labels , onClose}) => {
             duplicateTask(index);
             setOpenMenuIndex(null);
         }
+    }
+
+    const deleteTask = async(index) => {
+        const task = labels[index];
+        console.log("Deleting task:", task); // Debug log
+        const res = await fetch("http://localhost:5000/api/tasks/delete" , {
+            method: "POST",
+            headers: { "Content-Type": "application/json"},
+            body: JSON.stringify({user_id: task.user_id, task_id: task.task_id})
+        });
+        if (res.ok)
+            alert("Task has been deleted successfully!");
+        else
+            console.log("Something went wrong", task.task_id, task.user_id);
     }
 
    

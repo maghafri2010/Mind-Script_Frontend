@@ -1,4 +1,4 @@
-import { use, useState } from "react";
+import { useEffect, useState } from "react";
 import "./dashboard.css";
 import Navigator from "./ui/navigator";
 import MyPie from "./ui/radial";
@@ -7,6 +7,7 @@ import data from "../../data/tasks";
 import Card from "./ui/card";
 import { buttonList } from "./ui/new";
 import New from "./ui/new";
+import { filter } from "d3";
 
 const {
     
@@ -30,6 +31,7 @@ const Dash = () => {
     const [bol, setBol] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState(null);
     const [index, setIndex] = useState(null);
+    const [tasks, setTasks] = useState([]);
 
     const SelectedScreen = index !== null ? buttonList[index]?.screen : null;
 
@@ -38,23 +40,61 @@ const Dash = () => {
         setSelectedIndex(index);
     };
 
+
+    const fetchTasks = async () => {
+        const res = await fetch("http://localhost:5000/api/tasks/render", {
+            method: "POST",
+            headers: {"Content-type": "application/json"},
+            body: JSON.stringify({ user_id: 2 })
+        });
+        if (res.ok) {
+            const data = await res.json();
+            setTasks(data.tasks);
+        } else {
+            console.log("Something went wrong with fetching data!");
+        }
+    }
+
+    useEffect (() => {
+        fetchTasks();
+    }, []);
+    useEffect(() => {
+  console.log("Tasks:", onprogressTasks);
+}, [tasks]);
+    
+    
+    const onprogressTasks = tasks.filter(task => task.status === "onProgress");
+    const completedTasks = tasks.filter(task => task.status === "Completed");
+    const upcomingTasks = tasks.filter(task => task.status === "Upcoming");
+    const overdueTasks = tasks.filter(task => task.status === "Overdue");
+
+const statusGroup = [
+  { label: "OnProgress", color: "bg-blue-500", tasks: onprogressTasks },
+  { label: "Completed", color: "bg-green-500", tasks: completedTasks },
+  { label: "Upcoming", color: "bg-yellow-500", tasks: upcomingTasks },
+  { label: "Overdue", color: "bg-red-500", tasks: overdueTasks }
+];
+    
+
     return (
         <section className="flex flex-col w-full ">
-            {/* Tasks */}
             <div className="flex gap-8 items-center justify-center">
-                {tasks.map((task, i) => (
-                    <Card key={i} title={task.title} color={task.color} onButtonClick={() => openWindow(i)}>
-                        {task.content.map((arr, j) => (
-                            <p
+            {statusGroup.map((group, i) => (
+                    <Card key={i} label={group.label} color={group.color} onButtonClick={() => openWindow(i)}>
+                        {group.tasks.map((task, j) => (
+                            <div  
                                 key={j}
-                                className="flex items-center p-2 my-2 rounded box h-fit hover:bg-black hover:text-white"
+                                className="flex justify-between items-center p-2 my-2 rounded box h-fit hover:bg-black hover:text-white"
                             >
-                                {arr}
-                            </p>
+                                <p className="truncate max-w-[200px] h-fit">{task.title.slice(0,25)}</p>
+                            </div>
+                            
                         ))}
                     </Card>
                 ))}
             </div>
+
+            
 
             {/* Reminders & Pie */}
             <div className="flex gap-8 justify-center items-center mt-10">
@@ -136,7 +176,7 @@ const Dash = () => {
 
             {/* Navigator Modal */}
             {bol && selectedIndex !== null && (
-                <Navigator labels={array[selectedIndex]} onClose={() => setBol(false)} />
+                <Navigator labels={statusGroup[selectedIndex].tasks} onClose={() => setBol(false)} />
             )}
             
             

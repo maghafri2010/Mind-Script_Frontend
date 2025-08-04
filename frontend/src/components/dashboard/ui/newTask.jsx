@@ -1,8 +1,10 @@
 import Navigator from "./navigator";
 import closeIcon from "../../../assets/images/supprimer.png";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 import data from "../../../data/tasks";
+import MyDatePicker from "./datePicker";
+import Notif_task from "./notifaction";
 
 const {
     onProgress,
@@ -15,38 +17,63 @@ const {
 
 
 const NewTask = ({onClose}) => {
+
+    const message = "Task has been created succefully!";
+
+    
     const titleRef = useRef();
+    const descriptionRef = useRef();
     const dateRef = useRef();
     const statusRef = useRef();
     const projectRef = useRef();
     const teamRef = useRef();
 
-const saveChnages = (e) => {
+const handleSubmit = async (newTask) => {
+        try {
+            const res = await fetch("http://localhost:5000/api/tasks/add", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(newTask)
+
+            });
+            if (res.ok)
+                return true;
+            else
+                return false;
+        } catch (err) {
+            console.log(err);
+            return false;
+        }
+    };    
+
+const saveChnages = async (e) => {
     e.preventDefault();
     const newTitle = titleRef.current.value;
+    const newDescription = descriptionRef.current.value;
     const newDate = dateRef.current.value;
     const newStatus = statusRef.current.value;
     const newProject = projectRef.current.value;
     const newTeam = teamRef.current.value;
+    const userID = localStorage.getItem("userID");
 
     const newTask = {
         title: newTitle,
-        date: newDate,
+        description: newDescription,
+        dueDate: newDate,
         status: newStatus,
         project: newProject,
-        team: newTeam
+        team: newTeam,
+        user_id: userID
     };
-    if (statusRef.current.value === "onProgress") {
-        data.tasks[0].content.push(newTask.title);
-    } else if (statusRef.current.value === "Completed") {
-        data.tasks[1].content.push(newTask.title);
-    } else if (statusRef.current.value === "Upcoming") {
-        data.tasks[2].content.push(newTask.title);
-    } else if (statusRef.current.value === "Overdue") {
-        data.tasks[3].content.push(newTask.title);
+    
+    const result = await handleSubmit(newTask);
+    if (result !== false)
+    {
+        alert(message);
+        onClose();
+    } else {
+        alert("Invalid! Re-Enter the info.");
     }
-
-    onclose();
 }
 
 
@@ -54,7 +81,7 @@ const saveChnages = (e) => {
         <section className="absolute top-30 left-70 menu w-[1100px] h-[750px]  rounded-2xl">
             
             <div>
-                <h1 className="text-2xl ml-16 mt-8">New Task</h1>
+                <h1 className="text-2xl ml-16 mt-6">New Task</h1>
                 <button className="absolute right-8 top-8 h-8 w-8" onClick={onClose}>
                     <img src={closeIcon} alt="Close" />
                 </button>
@@ -66,8 +93,13 @@ const saveChnages = (e) => {
                         <input ref={titleRef}  type="text"  className="w-full p-2 rounded edit text-white" />
                     </div>
                     <div className="mb-4">
+                        <label className="block text-sm font-medium mb-2">Description</label>
+                        <textarea ref={descriptionRef}   className="w-full h-24 p-2 rounded edit text-white" rows={3} />
+                    </div>
+                    <div className="mb-4">
                         <label className="block text-sm font-medium mb-2">Date</label>
-                        <input ref={dateRef} type="text"  className="w-full p-2 rounded edit text-white" />
+                        
+                        <input ref={dateRef} type="date"  className="w-full p-2 rounded edit text-white" />
                     </div>
                     <div className="mb-4">
                         <label  className="block text-sm font-medium mb-2">Status</label>
@@ -89,6 +121,7 @@ const saveChnages = (e) => {
                     <button type="submit" className="bg-blue-500 cursor-pointer hover:bg-blue-600 text-white px-4 py-2 rounded">Save Changes</button>
                 </form>
             </div>
+            
             
         </section>
     )

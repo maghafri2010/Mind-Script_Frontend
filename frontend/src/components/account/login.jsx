@@ -23,8 +23,13 @@ const Login = ({onSwitch}) => {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(Data)
             });
-            if (res.ok)
-                navigate("/dashboard");
+            if (res.ok){
+                    const data = await res.json();
+                    navigate("/dashboard");
+                    localStorage.setItem("userID", data.userID); // Store user ID in localStorage
+
+            }
+                
             else {
                 const error = await res.json();
                 alert(error.message || "Login failed");

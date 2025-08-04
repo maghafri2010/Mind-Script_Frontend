@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Menu_icon from '../../assets/images/menu.png'
+import { useNavigate } from "react-router-dom";
 
 import Dashboard from '../../assets/images/dashboard.png'
 import Project from '../../assets/images/project.png'
@@ -23,6 +24,22 @@ const labels = [
 
 const Menu = ({bol, openMenu, setActiveLayer, activeLayer}) => {
 
+    const navigate = useNavigate();
+
+    const handleSubmit = async () => {
+         
+        try {
+            const res = await fetch("http://localhost:5000/api/logout", {
+                method: "POST",
+            })
+            if (res.ok)
+            {
+                navigate("/account");
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
     
 
     return (
@@ -30,7 +47,7 @@ const Menu = ({bol, openMenu, setActiveLayer, activeLayer}) => {
         <section className={`absolute z-50  rounded-2xl text-white  h-[850px] transition-width duration-500 ease-in-out menu`}
         style={{width: bol ? "250px" : "120px"}}
         >
-                <div className='flex flex-col justify-center  items-start'>
+                <div className='flex flex-col justify-center items-start'>
                     <button
                      onClick={openMenu} 
                      className='ml-10 mt-4 '
@@ -41,7 +58,7 @@ const Menu = ({bol, openMenu, setActiveLayer, activeLayer}) => {
 
                     <div className="box ml-10 mt-8 flex items-center gap-4 "
                     onClick={() => setActiveLayer(7)}>
-                        <img className="bg-white w-10 h-10 rounded-[50%]" src={Profile} alt="" />
+                        <img className="w-10 h-10 rounded-[50%]" src={Profile} alt="" />
                         {bol ? <h1 className="transition-opacity duration-500">username</h1> : "" }
                     </div>
 
@@ -54,12 +71,12 @@ const Menu = ({bol, openMenu, setActiveLayer, activeLayer}) => {
                         key={i} 
                         className={`box ml-10 mt-8 flex items-center gap-4 ${activeLayer === i ? "bg-gray-70" : ""} `}
                         onClick={() => setActiveLayer(i)}>
-                            <img className="w-10 h-10 bg-amber-50 rounded-2xl" src={label.img} alt={label.name} />
+                            <img className="w-10 h-10  rounded-2xl" src={label.img} alt={label.name} />
                             {bol && <p className="transition-opacity duration-500">{label.name}</p>}
                         </div>
                     ))}
                     <div className=" box flex ml-10  duration-150 items-center gap-4 mt-20"
-                    onClick={() => setActiveLayer()}>
+                    onClick={handleSubmit}>
                         <img className="bg-white  w-10 h-10 rounded-[50%]" src={Logout} alt="" />
                         {bol && <p className="transition-opacity duration-500">Logout</p>}
                     </div>
