@@ -7,7 +7,6 @@ import data from "../../data/tasks";
 import Card from "./ui/card";
 import { buttonList } from "./ui/new";
 import New from "./ui/new";
-import { filter } from "d3";
 
 const {
     
