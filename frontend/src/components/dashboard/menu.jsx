@@ -28,7 +28,7 @@ const Menu = ({bol, openMenu, setActiveLayer, activeLayer}) => {
     const handleSubmit = async () => {
          
         try {
-            const res = await fetch(`${import.meta.env.API_URL}/api/logout`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/logout`, {
                 method: "POST",
             })
             if (res.ok)
