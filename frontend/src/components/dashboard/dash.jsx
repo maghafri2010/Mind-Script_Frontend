@@ -41,7 +41,7 @@ const Dash = () => {
 
 
     const fetchTasks = async () => {
-        const res = await fetch("http://localhost:5000/api/tasks/render", {
+        const res = await fetch(`${import.meta.env.API_URL}/api/tasks/render`, {
             method: "POST",
             headers: {"Content-type": "application/json"},
             body: JSON.stringify({ user_id: 2 })

@@ -21,7 +21,6 @@ const labels = [
     {img: Inbox, name: "Inbox"},
     {img: Setting, name: "Settings"},
 ]
-
 const Menu = ({bol, openMenu, setActiveLayer, activeLayer}) => {
 
     const navigate = useNavigate();
@@ -29,7 +28,7 @@ const Menu = ({bol, openMenu, setActiveLayer, activeLayer}) => {
     const handleSubmit = async () => {
          
         try {
-            const res = await fetch("http://localhost:5000/api/logout", {
+            const res = await fetch(`${import.meta.env.API_URL}/api/logout`, {
                 method: "POST",
             })
             if (res.ok)
