@@ -8,9 +8,7 @@ import Card from "./ui/card";
 import { buttonList } from "./ui/new";
 import New from "./ui/new";
 
-const {
-    
-    
+const {    
     onProgress,
     completed,
     overdue,
@@ -41,7 +39,8 @@ const Dash = () => {
 
 
     const fetchTasks = async () => {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/tasks/render`, {
+        try {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/tasks/render`, {
             method: "POST",
             headers: {"Content-type": "application/json"},
             body: JSON.stringify({ user_id: 2 })
@@ -52,7 +51,10 @@ const Dash = () => {
         } else {
             console.log("Something went wrong with fetching data!");
         }
-    }
+        } catch (err) {
+            console.log(err);
+        }  
+    };
 
     useEffect (() => {
         fetchTasks();
@@ -61,7 +63,7 @@ const Dash = () => {
   console.log("Tasks:", onprogressTasks);
 }, [tasks]);
     
-    
+    // if there are empty cards, it will be due to the false values of these strings 
     const onprogressTasks = tasks.filter(task => task.status === "onProgress");
     const completedTasks = tasks.filter(task => task.status === "Completed");
     const upcomingTasks = tasks.filter(task => task.status === "Upcoming");
@@ -161,7 +163,7 @@ const statusGroup = [
                     </div>
                 </div>
                 {/* Calendar */}
-                <div className="bg-gray-600   p-4 w-[660px] h-[200px] rounded-2xl">
+                <div className="bg-gray-600 p-4 w-[660px] h-[200px] rounded-2xl">
                     <div className="flex justify-between">
                         <h1 className="font-bold">Calendar</h1>
                     </div>

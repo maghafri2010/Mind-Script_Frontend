@@ -63,7 +63,7 @@ const Login = ({onSwitch}) => {
                         placeholder="Password"
                     />
                     <button onClick={() => onSwitch("reset")} className="underline cursor-pointer mb-8">Forgot your password?</button>
-                    <button type="submit" className="btn-submit w-54 mb-4 h-10">Sign In</button>
+                    <button onClick={""} type="submit" className="btn-submit w-54 mb-4 h-10">Sign In</button>
                     <button onClick={() => onSwitch("register")} className="btn-style bg-[#FFCBB4] hover:bg-white w-54 h-10">Create Account</button>
                 </div>
                 </form>

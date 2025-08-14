@@ -18,14 +18,45 @@ const Navigator = ({labels , onClose}) => {
     const [bol, setBol] = useState(false);
     const [editingTask, setEditingTask] = useState(null);
     const [openMenuIndex, setOpenMenuIndex] = useState(null);
+
     const edit_Task = (index) => { 
         setEditingTask(labels[index]);
-    }
-    const duplicateTask = (index) => {
-        const taskToDuplicate = labels[index];
-        labels.push({...taskToDuplicate}); 
-
     };
+
+    const duplicateTask = async (index) => {
+        const taskToDuplicate = labels[index];
+        try {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/tasks/duplicate` , {
+            method: "POST",
+            headers: { "Content-Type": "application/json"},
+            body: JSON.stringify({user_id: task.user_id, task_id: task.task_id})
+        });
+        if (res.ok)
+            alert("Task has been duplicated successfully!");
+        else
+            console.log("Something went wrong", task.task_id, task.user_id);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+     const deleteTask = async(index) => {
+        const task = labels[index];
+        try {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/tasks/delete` , {
+            method: "POST",
+            headers: { "Content-Type": "application/json"},
+            body: JSON.stringify({user_id: task.user_id, task_id: task.task_id})
+        });
+        if (res.ok)
+            alert("Task has been deleted successfully!");
+        else
+            console.log("Something went wrong", task.task_id, task.user_id);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
     const handleMenuClick = (action, index) => {
         if (action === "delete") {
             deleteTask(index);
@@ -39,21 +70,9 @@ const Navigator = ({labels , onClose}) => {
             duplicateTask(index);
             setOpenMenuIndex(null);
         }
-    }
+    };
 
-    const deleteTask = async(index) => {
-        const task = labels[index];
-        console.log("Deleting task:", task); // Debug log
-        const res = await fetch("http://localhost:5000/api/tasks/delete" , {
-            method: "POST",
-            headers: { "Content-Type": "application/json"},
-            body: JSON.stringify({user_id: task.user_id, task_id: task.task_id})
-        });
-        if (res.ok)
-            alert("Task has been deleted successfully!");
-        else
-            console.log("Something went wrong", task.task_id, task.user_id);
-    }
+   
 
    
     

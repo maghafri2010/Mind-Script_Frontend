@@ -30,7 +30,7 @@ const NewTask = ({onClose}) => {
 
 const handleSubmit = async (newTask) => {
         try {
-            const res = await fetch("http://localhost:5000/api/tasks/add", {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/tasks/add`, {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(newTask)
