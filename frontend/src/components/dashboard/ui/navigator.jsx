@@ -42,8 +42,9 @@ const Navigator = ({labels , onClose}) => {
 
      const deleteTask = async(index) => {
         const task = labels[index];
+        const apiUrl = import.meta.env.VITE_API_URL;
         try {
-            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/tasks/delete` , {
+            const res = await fetch(`${apiUrl}/api/tasks/delete` , {
             method: "POST",
             headers: { "Content-Type": "application/json"},
             body: JSON.stringify({user_id: task.user_id, task_id: task.task_id})

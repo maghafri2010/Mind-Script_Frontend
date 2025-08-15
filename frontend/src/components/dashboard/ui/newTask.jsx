@@ -29,8 +29,9 @@ const NewTask = ({onClose}) => {
     const teamRef = useRef();
 
 const handleSubmit = async (newTask) => {
+    const apiUrl = import.meta.env.VITE_API_URL;
         try {
-            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/tasks/add`, {
+            const res = await fetch(`${apiUrl}/api/tasks/add`, {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(newTask)
@@ -78,7 +79,7 @@ const saveChnages = async (e) => {
 
 
     return (
-        <section className="absolute top-30 left-70 menu w-[1100px] h-[750px]  rounded-2xl">
+        <section className="absolute top-30 left-88 menu w-[1100px] h-[750px]  rounded-2xl">
             
             <div>
                 <h1 className="text-2xl ml-16 mt-6">New Task</h1>

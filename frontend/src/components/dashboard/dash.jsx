@@ -28,7 +28,7 @@ const Dash = () => {
     const [bol, setBol] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState(null);
     const [index, setIndex] = useState(null);
-    const [tasks, setTasks] = useState([]);
+    const [tasks, setTasks] = useState([]); // give params
 
     const SelectedScreen = index !== null ? buttonList[index]?.screen : null;
 
@@ -39,8 +39,9 @@ const Dash = () => {
 
 
     const fetchTasks = async () => {
+        const apiUrl = import.meta.env.VITE_API_URL;
         try {
-            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/tasks/render`, {
+            const res = await fetch(`${apiUrl}/api/tasks/render`, {
             method: "POST",
             headers: {"Content-type": "application/json"},
             body: JSON.stringify({ user_id: 2 })
