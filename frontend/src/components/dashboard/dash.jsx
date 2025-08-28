@@ -7,6 +7,7 @@ import data from "../../data/tasks";
 import Card from "./ui/card";
 import { buttonList } from "./ui/new";
 import New from "./ui/new";
+import { fetchTasks } from "../../api";
 
 const {    
     onProgress,
@@ -38,37 +39,23 @@ const Dash = () => {
     };
 
 
-    const fetchTasks = async () => {
-        const apiUrl = import.meta.env.VITE_API_URL;
-        try {
-            const res = await fetch(`${apiUrl}/api/tasks/render`, {
-            method: "POST",
-            headers: {"Content-type": "application/json"},
-            body: JSON.stringify({ user_id: 2 })
-        });
-        if (res.ok) {
-            const data = await res.json();
-            setTasks(data.tasks);
-        } else {
-            console.log("Something went wrong with fetching data!");
-        }
-        } catch (err) {
-            console.log(err);
-        }  
-    };
+    const loadTasks = async () => {
+            const tasks = await fetchTasks();
+            setTasks(tasks);
+        };
 
     useEffect (() => {
-        fetchTasks();
+        loadTasks();
     }, []);
     useEffect(() => {
   console.log("Tasks:", onprogressTasks);
 }, [tasks]);
     
     // if there are empty cards, it will be due to the false values of these strings 
-    const onprogressTasks = tasks.filter(task => task.status === "onProgress");
-    const completedTasks = tasks.filter(task => task.status === "Completed");
-    const upcomingTasks = tasks.filter(task => task.status === "Upcoming");
-    const overdueTasks = tasks.filter(task => task.status === "Overdue");
+    const onprogressTasks = Array.isArray(tasks) ? tasks.filter(task => task.status?.toLowerCase() === "onprogress") : [];
+const completedTasks = Array.isArray(tasks) ? tasks.filter(task => task.status?.toLowerCase() === "completed") : [];
+const upcomingTasks = Array.isArray(tasks) ? tasks.filter(task => task.status?.toLowerCase() === "upcoming") : [];
+const overdueTasks = Array.isArray(tasks) ? tasks.filter(task => task.status?.toLowerCase() === "overdue") : [];
 
 const statusGroup = [
   { label: "OnProgress", color: "bg-blue-500", tasks: onprogressTasks },
@@ -178,7 +165,7 @@ const statusGroup = [
 
             {/* Navigator Modal */}
             {bol && selectedIndex !== null && (
-                <Navigator labels={statusGroup[selectedIndex].tasks} onClose={() => setBol(false)} />
+                <Navigator labels={statusGroup[selectedIndex].tasks} onClose={() => setBol(false)} refreshTasks={loadTasks} />
             )}
             
             

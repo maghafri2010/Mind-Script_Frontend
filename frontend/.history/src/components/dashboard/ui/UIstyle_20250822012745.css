@@ -1,0 +1,17 @@
+
+
+.inputStyle {
+    width: 250px;
+    height: 40px;
+    border-radius: 10px;
+    padding-left: 8;
+    background-color: rgb(180, 180, 180);
+}
+.editButton { 
+    width: 100px;
+    border: 2px;
+    border-color: black;
+    border-radius: 20px;
+    font-size: 16;
+    
+}

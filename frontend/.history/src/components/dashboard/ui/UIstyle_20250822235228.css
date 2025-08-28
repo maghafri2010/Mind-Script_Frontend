@@ -1,0 +1,33 @@
+
+
+.inputStyle {
+    width: 250px;
+    height: 40px;
+    border-radius: 10px;
+    background-color: rgb(180, 180, 180);
+    padding-left: 24px;
+    padding-top: 10px;
+}
+.editButton { 
+    width: 100px;
+    height: 40px;
+    border: 2px;
+    border-color: black;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    
+}
+
+.editButton:hover {
+    opacity: 50%;
+}
+
+.iconEdit {
+    position: absolute;
+    border: 5px;
+    margin-left: 425px;
+    margin-top: 10px;
+    width: 20px;
+    height: 20px;
+}

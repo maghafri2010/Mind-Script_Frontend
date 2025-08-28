@@ -1,0 +1,24 @@
+
+
+.inputStyle {
+    width: 250px;
+    height: 40px;
+    border-radius: 10px;
+    padding-left: 8;
+    background-color: rgb(180, 180, 180);
+}
+.editButton { 
+    width: 100px;
+    height: 40px;
+    border: 2px;
+    border-color: black;
+    border-radius: 20px;
+    font-size: 20;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    
+}
+
+.editButton:hover {
+    opacity: 50%;
+}

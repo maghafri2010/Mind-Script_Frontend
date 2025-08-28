@@ -1,28 +1,47 @@
+import { stringify } from "postcss";
 import { useRef } from "react";
 
 
-const EditTask = ({task, onClose, closeIcon}) => {
+const EditTask = ({task, onClose, closeIcon, refreshTasks}) => {
+
+
+    
 
     const titleRef = useRef();
     const dateRef = useRef();
+    const descriptionRef = useRef();
     const statusRef = useRef();
     const projectRef = useRef();
     const teamRef = useRef();
 
-    const saveChanges = (e) => {
+    const saveChanges = async (e) => {
         e.preventDefault();
+        const apiUrl = import.meta.env.VITE_API_URL;
+
         const newTitle = titleRef.current.value;
         const newDate = dateRef.current.value;
+        const newDescription = descriptionRef.current.value;
         const newStatus = statusRef.current.value;
         const newProject = projectRef.current.value;
-        const newTeam = teamRef.current.value;
-        task.title = newTitle;
-        task.date = newDate;
-        task.status = newStatus;
-        task.project = newProject;
-        task.team = newTeam;
+        const newTeam = teamRef.current.value
 
+        try{
+            const res = await fetch(`${apiUrl}/api/tasks/edit`, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({ title: newTitle, description: newDescription, dueDate: newDate, status: newStatus, project: newProject, team: newTeam, task_id: task.task_id }),
+        })
+        if (res.ok){
+            alert("Task has been edited Successfully!")
+            if (refreshTasks) refreshTasks();
+        }
+        else
+            console.log("Error editing task, Smth went wrong");
         onClose();
+        } catch (err) {
+            console.log(err);
+        }
+        
         
     }
     return (
@@ -40,8 +59,12 @@ const EditTask = ({task, onClose, closeIcon}) => {
                         <input ref={titleRef} type="text" defaultValue={task.title} className="w-full p-2 rounded edit text-white" />
                     </div>
                     <div className="mb-4">
+                        <label className="block text-sm font-medium mb-2">Description</label>
+                        <textarea ref={descriptionRef} defaultValue={task.description} className="w-full h-24 p-2 rounded edit text-white" rows={3} />
+                    </div>
+                    <div className="mb-4">
                         <label className="block text-sm font-medium mb-2">Date</label>
-                        <input ref={dateRef} type="text" defaultValue={task.date} className="w-full p-2 rounded edit text-white" />
+                        <input ref={dateRef} type="text" defaultValue={task.dueDate.slice(0,10)} className="w-full p-2 rounded edit text-white" />
                     </div>
                     <div className="mb-4">
                         <label className="block text-sm font-medium mb-2">Status</label>

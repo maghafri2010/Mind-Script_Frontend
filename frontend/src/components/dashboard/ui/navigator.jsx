@@ -1,11 +1,10 @@
-
 import onprogress from "../../../data/tasks.jsx";
 import Sup from "../../../assets/images/kebab.png";
 import close from "../../../assets/images/supprimer.png";
 import EditTask from "./editTask.jsx";
 import { useState } from "react";
 import { minutesToHours } from "date-fns";
-
+import { fetchTasks } from "../../../api.js";
 const menuItems = [
     { title: "Edit", action: "edit" },
     { title: "Delete", action: "delete" },
@@ -13,7 +12,7 @@ const menuItems = [
 ]; 
 
 
-const Navigator = ({labels , onClose}) => {
+const Navigator = ({labels , onClose, refreshTasks}) => {
 
     const [bol, setBol] = useState(false);
     const [editingTask, setEditingTask] = useState(null);
@@ -24,11 +23,11 @@ const Navigator = ({labels , onClose}) => {
     };
 
     const duplicateTask = async (index) => {
-        const taskToDuplicate = labels[index];
+        const task = labels[index];
         try {
             const res = await fetch(`${import.meta.env.VITE_API_URL}/api/tasks/duplicate` , {
             method: "POST",
-            headers: { "Content-Type": "application/json"},
+            headers: {"Content-Type": "application/json"},
             body: JSON.stringify({user_id: task.user_id, task_id: task.task_id})
         });
         if (res.ok)
@@ -38,17 +37,20 @@ const Navigator = ({labels , onClose}) => {
         } catch (err) {
             console.log(err);
         }
+        if (refreshTasks) refreshTasks();
+
     };
 
-     const deleteTask = async(index) => {
+     const deleteTask = async (index) => {
         const task = labels[index];
         const apiUrl = import.meta.env.VITE_API_URL;
         try {
             const res = await fetch(`${apiUrl}/api/tasks/delete` , {
             method: "POST",
-            headers: { "Content-Type": "application/json"},
+            headers: {"Content-Type": "application/json"},
             body: JSON.stringify({user_id: task.user_id, task_id: task.task_id})
         });
+        
         if (res.ok)
             alert("Task has been deleted successfully!");
         else
@@ -56,6 +58,7 @@ const Navigator = ({labels , onClose}) => {
         } catch (err) {
             console.log(err);
         }
+        if (refreshTasks) refreshTasks();
     };
 
     const handleMenuClick = (action, index) => {
@@ -93,7 +96,7 @@ const Navigator = ({labels , onClose}) => {
                         <img src={Sup} 
                         onClick={() => setOpenMenuIndex(openMenuIndex === index ? null : index)}  className="box h-6 w-6 hover:bg-amber-50 "/>
                     </div>
-                    <h2 className="text-[14px] my-2">{label.date}</h2>
+                    <h2 className="text-[14px] my-2">{label.dueDate}</h2>
                     <p>{label.status}</p>
                 <div className="flex justify-between mt-3">
                     <p>{label.project}</p>
@@ -117,6 +120,7 @@ const Navigator = ({labels , onClose}) => {
                             task={editingTask}
                             onClose={() => setEditingTask(null)}
                             closeIcon={close}
+                            refreshTasks={refreshTasks}
                         />
                     )}    
             </div>
