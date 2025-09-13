@@ -5,7 +5,7 @@ import './ui/UIstyle.css';
 import editButton from '../../assets/images/edit-button.png'
 
 const labels = ["Username:", "Date Joined", "First Name:", "Last Name:", "Email:", "Phone:"];
-const keys = ["username", "created_at", "firstname", "lastname", "email", "phone"];
+const keys = ["username", "dateJoined", "firstName", "lastName", "email", "phone"];
 
 const Profile = () => {
 
@@ -109,8 +109,7 @@ const Profile = () => {
                         {isEditing && i === index ? (
                             <input className="inputStyle edit " value={editProfile[keys[i]]} onChange={ e => setEditProfile(prev => ({...prev, [keys[i]]: e.target.value}))}/>
                         ) : (
-                            keys[i] === "created_at" ? <span className="spanStyle pt-[9px] edit ">{profile[keys[i]].toString().slice(0,10)}</span>
-                            : <span className="spanStyle pt-[9px] edit ">{profile[keys[i]]}</span>
+                            <span className="spanStyle pt-[9px] edit ">{profile[keys[i]]}</span>
                         )}
                         {i !== 1 && (<img onClick={() => edit(i)} className="iconEdit box"  src={editButton} alt="editButton" />)}
                     </div>

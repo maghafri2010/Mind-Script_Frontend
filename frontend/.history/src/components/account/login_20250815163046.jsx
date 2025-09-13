@@ -27,7 +27,7 @@ const Login = ({onSwitch}) => {
             if (res.ok){
                     const data = await res.json();
                     navigate("/dashboard");
-                    localStorage.setItem("userID", data.user_id); // Store user ID in localStorage
+                    localStorage.setItem("userID", data.userID); // Store user ID in localStorage
 
             }
                 

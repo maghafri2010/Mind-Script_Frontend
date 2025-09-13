@@ -5,16 +5,16 @@ import './ui/UIstyle.css';
 import editButton from '../../assets/images/edit-button.png'
 
 const labels = ["Username:", "Date Joined", "First Name:", "Last Name:", "Email:", "Phone:"];
-const keys = ["username", "created_at", "firstname", "lastname", "email", "phone"];
+const keys = ["username", "dateJoined", "firstName", "lastName", "email", "phone"];
 
 const Profile = () => {
 
     const apiUrl = import.meta.env.VITE_API_URL;
     const [profile, setProfile] = useState({
         username: "",
-        created_at: "",
-        firstname: "",
-        lastname: "",
+        dateJoined: "",
+        firstName: "",
+        lastName: "",
         email: "",
         phone: ""
     });
@@ -51,7 +51,7 @@ const Profile = () => {
             const res = await fetch(`${apiUrl}/api/profile/edit`, {
             method: 'POST',
             headers: {"Content-Type" : "application/json"},
-            body: JSON.stringify({username: editProfile.username, firstname: editProfile.firstname, lastname: editProfile.lastname, email: editProfile.email, phone: editProfile.phone})
+            body: JSON.stringify({username: editProfile.username, firstname: editProfile.firstName, lastname: editProfile.lastName, email: editProfile.email, phone: editProfile.phone})
             });
             if (res.ok)
                 alert("Info has been edited successfully!");
@@ -71,7 +71,6 @@ const Profile = () => {
             if (res.ok) {
                 const data = await res.json();
                 setProfile(data.data);
-                console.log(data);
             } else
                 console.log("Something went wrong with rendering profile's info!!");
         } catch (err) {
@@ -109,8 +108,7 @@ const Profile = () => {
                         {isEditing && i === index ? (
                             <input className="inputStyle edit " value={editProfile[keys[i]]} onChange={ e => setEditProfile(prev => ({...prev, [keys[i]]: e.target.value}))}/>
                         ) : (
-                            keys[i] === "created_at" ? <span className="spanStyle pt-[9px] edit ">{profile[keys[i]].toString().slice(0,10)}</span>
-                            : <span className="spanStyle pt-[9px] edit ">{profile[keys[i]]}</span>
+                            <span className="spanStyle pt-[9px] edit ">{profile[keys[i]]}</span>
                         )}
                         {i !== 1 && (<img onClick={() => edit(i)} className="iconEdit box"  src={editButton} alt="editButton" />)}
                     </div>

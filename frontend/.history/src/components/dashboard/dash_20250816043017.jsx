@@ -49,8 +49,6 @@ const Dash = () => {
     }, []);
     useEffect(() => {
   console.log("Tasks:", onprogressTasks);
-    console.log("user:", localStorage.getItem('UserID'));
-
 }, [tasks]);
     
     // if there are empty cards, it will be due to the false values of these strings 
