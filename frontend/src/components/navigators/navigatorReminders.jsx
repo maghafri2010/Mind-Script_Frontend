@@ -42,24 +42,28 @@ const NavigatorReminders = ({labels , onClose, refreshReminders}) => {
     };
 
      const deleteReminder = async (index) => {
-        const task = labels[index];
-        const apiUrl = import.meta.env.VITE_API_URL;
-        try {
-            const res = await fetch(`${apiUrl}/api/reminders/delete` , {
+    const reminder = labels[index]; // not "task"
+    const apiUrl = import.meta.env.VITE_API_URL;
+    try {
+        const res = await fetch(`${apiUrl}/api/reminders/delete`, {
             method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({user_id: reminder.user_id, reminder_id: reminder.reminder_id})
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                user_id: reminder.user_id,
+                reminder_id: reminder.reminder_id,
+            }),
         });
-        
+
         if (res.ok)
             alert("Task has been deleted successfully!");
         else
             console.log("Something went wrong", reminder.reminder_id, reminder.user_id);
-        } catch (err) {
-            console.log(err);
-        }
-        if (refreshReminders) refreshReminders();
-    };
+    } catch (err) {
+        console.log(err);
+    }
+    if (refreshReminders) refreshReminders();
+};
+
 
     const handleMenuClick = (action, index) => {
         if (action === "delete") {
@@ -117,7 +121,7 @@ const NavigatorReminders = ({labels , onClose, refreshReminders}) => {
 
                 {editing && (
                         <EditTask
-                            task={editingTask}
+                            task={editing}
                             onClose={() => setEditing(null)}
                             closeIcon={close}
                             refreshReminders={refreshReminders}
