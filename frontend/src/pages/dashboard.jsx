@@ -21,11 +21,11 @@ const Dashboard = () => {
     const layers = [
         { name: 'Dashboard', component: <Dash /> },
         { name: 'My Tasks', component: <MyTasks /> },
-        { name: 'Workspace', component: <Workspace /> },
+        //{ name: 'Workspace', component: <Workspace /> },
         { name: 'Projects', component: <Project /> },
         { name: 'Calendar', component: <Calendar /> },
-        { name: 'Inbox', component: <Inbox /> },
-        { name: 'Settings', component: <Settings /> },
+        //{ name: 'Inbox', component: <Inbox /> },
+        //{ name: 'Settings', component: <Settings /> },
         { name: 'Profile', component: <Profile /> }
     ]; 
   

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import "./dashboard.css";
 import MyPie from "./ui/radial";
 import MyTimeRange from "./ui/calendarUi";
-import data from "../../data/tasks";
 import Card from "./ui/card";
 import { buttonList } from "./ui/new";
 import New from "./ui/new";
@@ -11,7 +10,6 @@ import NavigatorTasks from "../navigators/navigatorTasks";
 import NavigatorReminders from "../navigators/navigatorReminders";
 import NavigatorProjects from "../navigators/navigatorProjects"; // <- add your project navigator
 
-const { pieData, calendarData } = data;
 
 const Dash = () => {
   const [bolTask, setBolTask] = useState(false);
@@ -19,6 +17,7 @@ const Dash = () => {
   const [bolProject, setBolProject] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [index, setIndex] = useState(null);
+  
   const [tasks, setTasks] = useState([]);
   const [reminder, setReminder] = useState([]);
   const [project, setProject] = useState([]);
@@ -74,6 +73,27 @@ const Dash = () => {
     { label: "Upcoming", color: "bg-yellow-500", tasks: upcomingTasks },
     { label: "Overdue", color: "bg-red-500", tasks: overdueTasks },
   ];
+
+  const pieData = [
+  { id: "On Progress", label: "On Progress", value: onprogressTasks.length },
+  { id: "Completed", label: "Completed", value: completedTasks.length },
+  { id: "Upcoming", label: "Upcoming", value: upcomingTasks.length },
+  { id: "Overdue", label: "Overdue", value: overdueTasks.length },
+];
+
+
+
+const allTasks = [...onprogressTasks, ...completedTasks, ...overdueTasks, ...upcomingTasks];
+const dateCount = {};
+
+allTasks.forEach(task => {
+    const day = task.dueDate?.slice(0, 10);
+    if (day) {
+        dateCount[day] = (dateCount[day] || 0) + 1;
+    }
+});
+
+const calendarData = Object.entries(dateCount).map(([day, value]) => ({ day, value }));
 
   return (
     <section className="flex flex-col w-full ">

@@ -27,10 +27,10 @@ const Login = ({onSwitch}) => {
             if (res.ok){
                     const data = await res.json();
                     navigate("/dashboard");
+                    localStorage.setItem("token", data.token);
                     localStorage.setItem("userID", data.user_id); // Store user ID in localStorage
-
+                    navigate("/dashboard");
             }
-                
             else {
                 const error = await res.json();
                 alert(error.message || "Login failed");

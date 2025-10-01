@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Plus from '../../../assets/images/plus.png';
 
-import NewTask from './newTask';
+import NewItem from './newTask';
 import Task_icon from '../../svg/Task_icon';
 import Project_icon from '../../svg/Project_icon';
 import Calendar_icon from '../../svg/Calendar_icon';
@@ -12,10 +12,9 @@ import Workspace_icon from '../../svg/Workspace_icon';
 
 
 export const buttonList = [
-    { name: "task", img: <Task_icon />, screen: NewTask}, 
-    { name: "project", img: <Project_icon />, screen: NewTask },
-    { name: "Note", img: <Calendar_icon /> },
-    { name: "Reminder", img: <Workspace_icon /> },
+    { name: "Task", img: <Task_icon />, screen: NewItem}, 
+    { name: "Project", img: <Project_icon />, screen: NewItem },
+    { name: "Reminder", img: <Workspace_icon />, screen: NewItem },
 ];
 
 const New = ({setIndex, index}) => {

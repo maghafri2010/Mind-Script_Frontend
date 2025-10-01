@@ -4,7 +4,7 @@ import DatePicker from "react-datepicker";
 import { format } from "date-fns";
 import "react-datepicker/dist/react-datepicker.css";
 
-export default function MyDatePicker({ onDateSelect }) {
+export default function MyDatePicker({ value, onDateSelect }) {
   const [selectedDate, setSelectedDate] = useState(null);
 
   const handleChange = (date) => {
@@ -16,7 +16,7 @@ export default function MyDatePicker({ onDateSelect }) {
   return (
     <div className="p-2">
       <DatePicker
-        selected={selectedDate}
+        selected={value}
         onChange={handleChange}
         placeholderText="Select a date"
         className="p-2 border card mb-4 rounded-2xl text-center cursor-pointer  w-full "

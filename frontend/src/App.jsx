@@ -5,6 +5,7 @@ import {BrowserRouter , Routes, Route} from "react-router-dom"
 import Register from './components/account/register'
 import Reset from './components/account/reset'
 import Dashboard from './pages/dashboard'
+import PrivateRoute from './Route/privateRoute'
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
         <Route path='/account' element={<Account />}></Route>
         <Route path='/account/register' element={<Register />}></Route>
         <Route path='/account/reset' element={<Reset />}></Route>
-        <Route path='/dashboard' element={<Dashboard />}></Route>
+        <Route path='/dashboard' element={<PrivateRoute><Dashboard /></PrivateRoute>}></Route>
       </Routes>
     </BrowserRouter>
     </>

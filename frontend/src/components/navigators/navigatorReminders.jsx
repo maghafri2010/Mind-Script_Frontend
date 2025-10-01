@@ -1,7 +1,6 @@
-import onprogress from "../../data/tasks.jsx";
 import Sup from "../../assets/images/kebab.png";
 import close from "../../assets/images/supprimer.png";
-import EditTask from "../dashboard/ui/editTask.jsx";
+import EditItem from "../dashboard/ui/editItem.jsx";
 import { useState } from "react";
 import { minutesToHours } from "date-fns";
 import { fetchTasks } from "../../api.js";
@@ -10,6 +9,8 @@ const menuItems = [
     { title: "Delete", action: "delete" },
     { title: "Duplicate", action: "duplicate" },
 ]; 
+
+const token = localStorage.getItem("token");
 
 
 const NavigatorReminders = ({labels , onClose, refreshReminders}) => {
@@ -20,6 +21,8 @@ const NavigatorReminders = ({labels , onClose, refreshReminders}) => {
 
     const editReminder = (index) => { 
         setEditing(labels[index]);
+        console.log(labels);
+
     };
 
     const duplicateReminder = async (index) => {
@@ -27,7 +30,7 @@ const NavigatorReminders = ({labels , onClose, refreshReminders}) => {
         try {
             const res = await fetch(`${import.meta.env.VITE_API_URL}/api/reminders/duplicate` , {
             method: "POST",
-            headers: {"Content-Type": "application/json"},
+            headers: {"Content-Type": "application/json" ,         "Authorization": `Bearer ${token}`},
             body: JSON.stringify({user_id: reminder.user_id, reminder_id: reminder.reminder_id})
         });
         if (res.ok)
@@ -42,12 +45,12 @@ const NavigatorReminders = ({labels , onClose, refreshReminders}) => {
     };
 
      const deleteReminder = async (index) => {
-    const reminder = labels[index]; // not "task"
+    const reminder = labels[index]; 
     const apiUrl = import.meta.env.VITE_API_URL;
     try {
         const res = await fetch(`${apiUrl}/api/reminders/delete`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json" ,         "Authorization": `Bearer ${token}` },
             body: JSON.stringify({
                 user_id: reminder.user_id,
                 reminder_id: reminder.reminder_id,
@@ -120,11 +123,12 @@ const NavigatorReminders = ({labels , onClose, refreshReminders}) => {
                 ))} 
 
                 {editing && (
-                        <EditTask
-                            task={editing}
+                        <EditItem
+                            item={editing}
                             onClose={() => setEditing(null)}
                             closeIcon={close}
-                            refreshReminders={refreshReminders}
+                            refreshItem={refreshReminders}
+                            name={"Reminder"}
                         />
                     )}    
             </div>

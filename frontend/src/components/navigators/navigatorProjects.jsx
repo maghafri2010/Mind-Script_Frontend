@@ -1,6 +1,6 @@
 import Sup from "../../assets/images/kebab.png";
 import close from "../../assets/images/supprimer.png";
-import EditTask from "../dashboard/ui/editTask.jsx";
+import EditItem from "../dashboard/ui/editItem.jsx";
 import { useState } from "react";
 
 const menuItems = [
@@ -9,16 +9,17 @@ const menuItems = [
   { title: "Duplicate", action: "duplicate" },
 ];
 
+const token = localStorage.getItem("token");
+
+
 const NavigatorProjects = ({ labels, onClose, refreshProjects }) => {
   const [editing, setEditing] = useState(null);
   const [openMenuIndex, setOpenMenuIndex] = useState(null);
 
-  // ✅ Edit a project
   const editProject = (index) => {
     setEditing(labels[index]);
   };
 
-  // ✅ Duplicate project
   const duplicateProject = async (index) => {
     const project = labels[index];
     try {
@@ -26,7 +27,7 @@ const NavigatorProjects = ({ labels, onClose, refreshProjects }) => {
         `${import.meta.env.VITE_API_URL}/api/projects/duplicate`,
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json",         "Authorization": `Bearer ${token}` },
           body: JSON.stringify({
             user_id: project.user_id,
             project_id: project.project_id,
@@ -54,7 +55,7 @@ const NavigatorProjects = ({ labels, onClose, refreshProjects }) => {
       const res = await fetch(
         `${apiUrl}/api/projects/delete`, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json" ,         "Authorization": `Bearer ${token}` },
           body: JSON.stringify({
             user_id: project.user_id,
             project_id: project.project_id,
@@ -65,7 +66,7 @@ const NavigatorProjects = ({ labels, onClose, refreshProjects }) => {
       if (res.ok) {
         alert("Project has been deleted successfully!");
       } else {
-        console.log("Something went wrong deleting", project.project_id);
+        console.log("Something went wrong deleting", project.project_id, project.user_id);
       }
     } catch (err) {
       console.log(err);
@@ -145,11 +146,12 @@ const NavigatorProjects = ({ labels, onClose, refreshProjects }) => {
         ))}
 
         {editing && (
-          <EditTask
-            task={editing}
+          <EditItem
+            item={editing}
             onClose={() => setEditing(null)}
             closeIcon={close}
-            refreshProjects={refreshProjects}
+            refreshItem={refreshProjects}
+            name={"Project"}
           />
         )}
       </div>

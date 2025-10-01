@@ -1,22 +1,16 @@
-import { useState } from "react";
-import data from "../../data/tasks";
+import { useEffect, useState } from "react";
 import MyPie from "./ui/radial";
 import DatePicker from "react-datepicker";
 import MyDatePicker from "./ui/datePicker";
 import NavigatorTasks from "../navigators/navigatorTasks";
+import { fetchReminders, fetchTasks } from "../../api";
+import NavigatorReminders from "../navigators/navigatorReminders";
+import { useReminder } from "../../data/reminders";
+import { useTasks } from "../../data/tasks";
+import Reset from "../svg/Reset";
 
-const {
-    
-    onProgress,
-    completed,
-    upcoming,
-    overdue,
-    reminder,
-    pieData,
-    tasks,
-} = data;
 
-const array = [onProgress, completed, upcoming, overdue, reminder];
+
 
 const Card = ({ title, onButtonClick, children, color }) => (
     <div className="card overflow-auto p-4 text-white scroll-container w-[250px] h-[300px] rounded-2xl">
@@ -34,32 +28,82 @@ const Card = ({ title, onButtonClick, children, color }) => (
     </div>
 );
 
-const MyTasks = () => {
+const MyTasks = (date) => {
     const [bol, setBol] = useState(false);
-        const [selectedIndex, setSelectedIndex] = useState(null);
+    const [selectedIndex, setSelectedIndex] = useState(null);
+    const [selectedDate, setSelectedDate] = useState(null);
+    const [filteredTasks, setFilteredTasks] = useState([]);
+    const [filteredReminders, setFilteredReminders] = useState([]);
+
+    const reminders = useReminder();
+    const tasks = useTasks();
     
-        const openWindow = (index) => {
-            setBol(true);
-            setSelectedIndex(index);
-        };
+    const [bolReminder, setBolReminder] = useState(false);
+    const openWindow = (index) => {
+        setBol(true);
+        setSelectedIndex(index);
+    };
+
+    const openReminderWindow = () => setBolReminder(true);
+
+    const reset = () => {
+        setSelectedDate(null);
+        setFilteredTasks([]);
+        setFilteredReminders([]);
+    };
+
+    const onprogressTasks = (selectedDate ? filteredTasks : tasks).filter(
+    (t) => t.status?.toLowerCase() === "onprogress"
+  );
+  const completedTasks = (selectedDate ? filteredTasks : tasks).filter(
+    (t) => t.status?.toLowerCase() === "completed"
+  );
+  const upcomingTasks = (selectedDate ? filteredTasks : tasks).filter(
+    (t) => t.status?.toLowerCase() === "upcoming"
+  );
+  const overdueTasks = (selectedDate ? filteredTasks : tasks).filter(
+    (t) => t.status?.toLowerCase() === "overdue"
+  );
+
+    const pieData = [
+  { id: "On Progress", label: "On Progress", value: onprogressTasks.length },
+  { id: "Completed", label: "Completed", value: completedTasks.length },
+  { id: "Upcoming", label: "Upcoming", value: upcomingTasks.length },
+  { id: "Overdue", label: "Overdue", value: overdueTasks.length },
+];
+const statusGroup = [
+    { label: "OnProgress", color: "bg-blue-500", tasks: onprogressTasks },
+    { label: "Completed", color: "bg-green-500", tasks: completedTasks },
+    { label: "Upcoming", color: "bg-yellow-500", tasks: upcomingTasks },
+    { label: "Overdue", color: "bg-red-500", tasks: overdueTasks },
+  ];
+
+    
     return (
         <section className=" flex flex-col items-center">
                 
+            <div className="flex items-center">
                 <MyDatePicker
+                value={selectedDate}
                 onDateSelect={(dateStr) => {
-                setDateData(allData[dateStr] || []);
+                setSelectedDate(dateStr);
+                setFilteredTasks(tasks.filter(t => t.dueDate?.slice(0, 10) === dateStr));
+                setFilteredReminders(reminders.filter(r => r.dueDate?.slice(0, 10) === dateStr));
                 }}
                 />
+                <Reset width={30} className="mb-3" onClick={() => reset()} />
+            </div>
+                
 
             <div className="flex gap-8 items-center justify-center">
-                {tasks.map((task, i) => (
-                    <Card key={i} title={task.title} color={task.color} onButtonClick={() => openWindow(i)}>
-                        {task.content.map((arr, j) => (
+                {statusGroup.map((group, i) => (
+                    <Card key={i} title={group.label} color={group.color} onButtonClick={() => openWindow(i)}>
+                        {group.tasks.map((task, j) => (
                             <p  
                                 key={j}
                                 className="flex items-center p-2 my-2 rounded box h-fit hover:bg-black hover:text-white"
                             >
-                                {arr}
+                                {task.title}
                             </p>
                         ))}
                     </Card>
@@ -73,13 +117,13 @@ const MyTasks = () => {
                     <div className="flex justify-between items-center">
                         <h1 className="font-bold text-2xl">Reminders</h1>
                         <button
-                            onClick={() => openWindow(4)}
+                            onClick={() => openReminderWindow()}
                             className="border border-black box rounded pl-1 w-10"
                         >
                             <p className="w-6 h-4 rounded bg-black"></p>
                         </button>
                     </div>
-                    {reminder.map((rem, i) => (
+                    {(selectedDate ? filteredReminders : reminders).map((rem, i) => (
                         <div
                             key={i}
                             className="justify-between flex box hover:bg-black hover:text-white "
@@ -88,7 +132,7 @@ const MyTasks = () => {
                                 {rem.title}
                             </p>
                             <p className="flex items-center p-2 my-2 rounded h-fit">
-                                {rem.date}
+                                {rem.dueDate?.slice(0, 10)}
                             </p>
                         </div>
                     ))}
@@ -105,8 +149,15 @@ const MyTasks = () => {
             </div>
             {/* Navigator Modal */}
             {bol && selectedIndex !== null && (
-                <NavigatorTasks labels={array[selectedIndex]} onClose={() => setBol(false)} />
+                <NavigatorTasks labels={statusGroup[selectedIndex].tasks} onClose={() => setBol(false)} refreshTasks={loadTasks}/>
             )}
+            {bolReminder && (
+                    <NavigatorReminders
+                      labels={reminders}
+                      onClose={() => setBolReminder(false)}
+                      refreshReminders={loadReminders}
+                    />
+                  )}
 
             
 

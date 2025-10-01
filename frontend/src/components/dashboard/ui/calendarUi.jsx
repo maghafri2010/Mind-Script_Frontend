@@ -9,6 +9,8 @@ const getColor = (status) => {
       return '#2196f3'; // Blue
     case 'overdue':
       return '#f44336'; // Red
+      case 'completed' :
+        return '#4caf50';
     default:
       return '#2e2e2e'; // Default dark background
   }
@@ -47,6 +49,7 @@ const MyTimeRange = ({ data }) => {
             { label: 'On Progress', color: '#4caf50' },
             { label: 'Upcoming', color: '#2196f3' },
             { label: 'Overdue', color: '#f44336' },
+            { label: 'Completed', color: '#4caf50' }
           ],
         },
       ]}

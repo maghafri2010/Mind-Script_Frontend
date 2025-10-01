@@ -1,21 +1,18 @@
-import onprogress from "../../data/tasks.jsx";
 import Sup from "../../assets/images/kebab.png"
 import close from "../../assets/images/supprimer.png";
-import EditTask from "../dashboard/ui/editTask.jsx";
+import EditItem from "../dashboard/ui/editItem.jsx";
 import { useState } from "react";
-import { minutesToHours } from "date-fns";
-import { fetchTasks } from "../../api.js";
+
 const menuItems = [
     { title: "Edit", action: "edit" },
     { title: "Delete", action: "delete" },
     { title: "Duplicate", action: "duplicate" },
 ]; 
 
+const token = localStorage.getItem("token");
+
 
 const NavigatorTasks = ({labels , onClose, refreshTasks}) => {
-
-    const [bol, setBol] = useState(false);
-    
 
     const [editingTask, setEditingTask] = useState(null);
     const [openMenuIndex, setOpenMenuIndex] = useState(null);
@@ -29,7 +26,7 @@ const NavigatorTasks = ({labels , onClose, refreshTasks}) => {
         try {
             const res = await fetch(`${import.meta.env.VITE_API_URL}/api/tasks/duplicate` , {
             method: "POST",
-            headers: {"Content-Type": "application/json"},
+            headers: {"Content-Type": "application/json",        "Authorization": `Bearer ${token}`},
             body: JSON.stringify({user_id: task.user_id, task_id: task.task_id})
         });
         if (res.ok)
@@ -49,7 +46,7 @@ const NavigatorTasks = ({labels , onClose, refreshTasks}) => {
         try {
             const res = await fetch(`${apiUrl}/api/tasks/delete` , {
             method: "POST",
-            headers: {"Content-Type": "application/json"},
+            headers: {"Content-Type": "application/json" ,         "Authorization": `Bearer ${token}`},
             body: JSON.stringify({user_id: task.user_id, task_id: task.task_id})
         });
         
@@ -118,11 +115,12 @@ const NavigatorTasks = ({labels , onClose, refreshTasks}) => {
                 ))} 
 
                 {editingTask && (
-                        <EditTask
-                            task={editingTask}
+                        <EditItem
+                            item={editingTask}
                             onClose={() => setEditingTask(null)}
                             closeIcon={close}
-                            refreshTasks={refreshTasks}
+                            refreshItem={refreshTasks}
+                            name={"Task"}
                         />
                     )}    
             </div>

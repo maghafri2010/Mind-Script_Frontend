@@ -6,6 +6,7 @@ import editButton from '../../assets/images/edit-button.png'
 
 const labels = ["Username:", "Date Joined", "First Name:", "Last Name:", "Email:", "Phone:"];
 const keys = ["username", "created_at", "firstname", "lastname", "email", "phone"];
+const token = localStorage.getItem("token");
 
 const Profile = () => {
 
@@ -50,7 +51,9 @@ const Profile = () => {
         try {
             const res = await fetch(`${apiUrl}/api/profile/edit`, {
             method: 'POST',
-            headers: {"Content-Type" : "application/json"},
+            headers: {"Content-Type" : "application/json"   ,      "Authorization": `Bearer ${token}`
+},
+
             body: JSON.stringify({ user_id: parseInt(localStorage.getItem("userID")),username: editProfile.username, firstname: editProfile.firstname, lastname: editProfile.lastname, email: editProfile.email, phone: editProfile.phone, created_at: editProfile.created_at})
             });
             if (res.ok)
@@ -65,7 +68,8 @@ const Profile = () => {
         try {
             const res = await fetch(`${apiUrl}/api/profile/render`, {
                 method: 'POST',
-                headers: {"Content-Type" : "application/json"},
+                headers: {"Content-Type" : "application/json"    ,    "Authorization": `Bearer ${token}`
+},
                 body: JSON.stringify({user_id : parseInt(localStorage.getItem("userID"))}),
             });
             if (res.ok) {

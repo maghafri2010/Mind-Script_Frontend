@@ -23,12 +23,14 @@ import Profile_icon from '../svg/Profile_icon';
 const labels = [
     {img: <Dash_icon /> , name: "Dashboard"},
     {img: <Task_icon />, name: "Tasks"},
-    {img: <Workspace_icon />, name: "Workspace"},
+    //{img: <Workspace_icon />, name: "Workspace"},
     {img: <Project_icon />, name: "Projects"},
     {img: <Calendar_icon />, name: "Calendar"},
-    {img: <Inbox_icon />, name: "Inbox"},
-    {img: <Setting_icon />, name: "Settings"},
-]
+    //{img: <Inbox_icon />, name: "Inbox"},
+    //{img: <Setting_icon />, name: "Settings"},
+];
+
+
 const Menu = ({bol, openMenu, setActiveLayer, activeLayer}) => {
 
     const navigate = useNavigate();
@@ -36,15 +38,25 @@ const Menu = ({bol, openMenu, setActiveLayer, activeLayer}) => {
     const api_URL = import.meta.env.VITE_API_URL;
 
     const handleSubmit = async () => {
+         const token = localStorage.getItem("token");
+        if (!token) return navigate("/account"); // already logged out
          
         try {
             const res = await fetch(`${api_URL}/api/logout`, {
                 method: "POST",
+                 headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`, // <-- send token
+            },
             })
             if (res.ok)
             {
+                localStorage.removeItem("token");
+                localStorage.removeItem("userID");
                 navigate("/account");
-            }
+            } else 
+                console.log("Logout failed", res.status);
+
         } catch (err) {
             console.log(err);
         }
@@ -79,9 +91,9 @@ const Menu = ({bol, openMenu, setActiveLayer, activeLayer}) => {
                         src={Menu_icon} alt="Menu_icon" />
                     </button>
 
-                    <div className="box ml-10 mt-8 flex items-center gap-4 "
-                    onClick={() => setActiveLayer(7)}>
-                        <span className="w-8 h-8 rounded-[50%]" alt="" ><Profile_icon /></span>
+                    <div className="box ml-10 mt-8 flex items-center gap-4"
+                    onClick={() => setActiveLayer(4)}>
+                        <span className="w-8 h-8 rounded-[50%] justify-center" alt="" ><Profile_icon /></span>
                     </div>
 
                     <div className={`flex gap-4 justify-center items-center border transition-all ease-in-out duration-300  mt-8  ${bol ? "w-[180px] ml-8 pl-4 rounded-2xl" : "w-[120px] text-[13px]" }`}>
@@ -96,7 +108,7 @@ const Menu = ({bol, openMenu, setActiveLayer, activeLayer}) => {
                             {bol && <p className="transition-opacity duration-500">{label.name}</p>}
                         </div>
                     ))}
-                    <div className=" box flex ml-10  duration-150 items-center gap-4 mt-20"
+                    <div className=" box flex ml-10  duration-150 items-center gap-4 absolute bottom-10"
                     onClick={handleSubmit}>
                         <img className="bg-white  w-10 h-10 rounded-[50%]" src={Logout} alt="" />
                         {bol && <p className="transition-opacity duration-500">Logout</p>}
