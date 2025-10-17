@@ -1,7 +1,7 @@
 import './App.css'
 import Home from './pages/home'
 import Account from './pages/account'
-import {BrowserRouter , Routes, Route} from "react-router-dom"
+import {HashRouter , Routes, Route} from "react-router-dom"
 import Register from './components/account/register'
 import Reset from './components/account/reset'
 import Dashboard from './pages/dashboard'
@@ -10,7 +10,7 @@ import PrivateRoute from './Route/privateRoute'
 function App() {
   return (
     <> 
-    <BrowserRouter basename={'/Mind-Script_Frontend'}>
+    <HashRouter basename={'/Mind-Script_Frontend'}>
       <Routes>
         <Route path="/" element= {<Home />}></Route>
         <Route path='/account' element={<Account />}></Route>
@@ -18,7 +18,7 @@ function App() {
         <Route path='/account/reset' element={<Reset />}></Route>
         <Route path='/dashboard' element={<PrivateRoute><Dashboard /></PrivateRoute>}></Route>
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
     </>
   )
 }
